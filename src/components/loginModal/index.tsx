@@ -6,25 +6,35 @@ const LoginModal = () => {
     <ModalBackground>
       <ModalWrapper>
         <LoginText>소셜 계정으로 로그인</LoginText>
-        <div>
-          <Image src={ModalBackgroundImg} alt="모달이미지" />
+        <Wrapper>
           <OAuthImgWrapper>
             <Image src={Google} alt="Google OAuth" />
             <Image src={Github} alt="Github OAuth" />
             <Image src={Facebook} alt="Facebook OAuth" />
           </OAuthImgWrapper>
           <WelcomeText>환영합니다 !</WelcomeText>
-        </div>
+        </Wrapper>
       </ModalWrapper>
     </ModalBackground>
   );
 };
 
+const Wrapper = styled.div`
+  width: 100%;
+  height: 40vh;
+  background-image: url("${ModalBackgroundImg}");
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around
+`;
+
 const LoginText = styled.span`
   font-weight: 700;
   font-size: 32px;
   line-height: 44px;
-  padding: 5% 0 5% 0;
+  margin-top: 8%;
 `;
 
 const ModalBackground = styled.div`
@@ -37,7 +47,6 @@ const ModalBackground = styled.div`
 
 const Image = styled.img`
   height: max-content;
-  margin-top: 20px;
   border-radius: 0 0 10px 10px;
 `;
 
@@ -45,29 +54,23 @@ const OAuthImgWrapper = styled.div`
   width: 500px;
   display: flex;
   justify-content: space-around;
-  position: absolute;
-  top: 45%;
 `;
 
 const WelcomeText = styled.span`
-  color: #ffffff;
+  color: ${({ theme }) => theme.color.white};
   font-size: 32px;
   font-weight: 700;
   line-height: 44px;
-  position: absolute;
-  top: 65%;
-  left: 45%;
 `;
 
 const ModalWrapper = styled.div`
   width: 500px;
   height: 500px;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.color.white};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid black;
   border-radius: 10px;
 `;
 
