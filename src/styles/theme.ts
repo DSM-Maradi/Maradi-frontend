@@ -12,6 +12,7 @@ const theme = {
     gray500: "#E0E0E0",
     gray300: "#F0F0F0",
     gray100: "#FBFBFB",
+    white: "#FFFFFF",
   },
   font: {
     noto: "Noto Sans",
