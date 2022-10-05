@@ -1,9 +1,22 @@
 import styled from "styled-components";
 import { ModalBackgroundImg, Google, Facebook, Github } from "../../assets/img";
+import { useRef } from "react";
 
-const LoginModal = () => {
+interface PropsType {
+  setModal: (modal: boolean) => void;
+}
+
+const LoginModal = ({ setModal }: PropsType) => {
+  const backgroundRef = useRef<HTMLDivElement>(null);
   return (
-    <ModalBackground>
+    <ModalBackground
+      ref={backgroundRef}
+      onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+        if (e.target === backgroundRef.current) {
+          setModal(false);
+        }
+      }}
+    >
       <ModalWrapper>
         <LoginText>소셜 계정으로 로그인</LoginText>
         <Wrapper>
@@ -42,16 +55,19 @@ const LoginText = styled.span`
 `;
 
 const ModalBackground = styled.div`
+  width: 100%;
   height: 100vh;
+  position: fixed;
   display: grid;
   place-content: center;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
+  z-index: 2;
 `;
 
 const Image = styled.img`
   height: max-content;
   border-radius: 0 0 10px 10px;
+  cursor: pointer;
 `;
 
 const OAuthImgWrapper = styled.div`
@@ -76,6 +92,7 @@ const ModalWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   border-radius: 10px;
+  z-index: 3;
 `;
 
 export default LoginModal;
