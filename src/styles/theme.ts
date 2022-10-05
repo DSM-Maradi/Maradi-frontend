@@ -13,9 +13,12 @@ const theme = {
     gray300: "#F0F0F0",
     gray100: "#FBFBFB",
     white: "#FFFFFF",
+    black: "#000000",
   },
   font: {
     noto: "Noto Sans",
+    nanum: "Nanum Gothic",
+    arita: "Arita-dotum4.0(OTF)",
   },
 } as const;
 
