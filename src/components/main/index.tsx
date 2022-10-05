@@ -1,151 +1,220 @@
 import Header from "../common/header";
 import styled from "styled-components";
-import { mainImg, searchFont, listImg } from "../../assets/img";
+import { MainImg, SearchFont, ListImg, SortArrow } from "../../assets/img";
+import { ProjectList } from "../../constance/projectlist";
+import { useState, useEffect } from "react";
+import LoginModal from "../loginModal";
 
-const MainStyle = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-`;
-
-const MainImg = styled.img`
-  width: 100%;
-  position: absolute;
-`;
+const Main = () => {
+  const [modal, setModal] = useState<boolean>(false);
+  useEffect(() => {
+    if (modal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [modal]);
+  return (
+    <>
+      <Header setModal={setModal} />
+      {modal && <LoginModal setModal={setModal} />}
+      <MainImgContainer>
+        <MainImgFont>
+          프로젝트 비용 걱정 그만하고 일단 하세요.
+          <MainImgHelp>
+            저희가 도와줄게요<WhiteFont>, MARADI</WhiteFont>
+          </MainImgHelp>
+        </MainImgFont>
+      </MainImgContainer>
+      <SearchBarArea>
+        <SearchWrapper>
+          <SelectStyle>
+            <option value="">정렬순서</option>
+            <option value="">추천순</option>
+            <option value="">인기순</option>
+          </SelectStyle>
+          <InputWrapper>
+            <SearchBarInput
+              type="text"
+              autoComplete="off"
+              placeholder="찾으시는 프로젝트가 있나요?"
+            />
+            <SearchFontTag src={SearchFont} />
+          </InputWrapper>
+        </SearchWrapper>
+      </SearchBarArea>
+      <ListWrapper>
+        <ListContainer>
+          {ProjectList.map((e) => (
+            <ListItems key={e.id}>
+              <ListImgTag src={ListImg} alt="리스트 이미지" />
+              <TitleWrapper>
+                <h3>{e.title}</h3>
+                <ListContents>{e.text}</ListContents>
+              </TitleWrapper>
+              <ListBottom>
+                <RegisterDate>등록날짜 | {e.date}</RegisterDate>
+                <Money>
+                  {e.goalMoney}원 / {e.nowMoney}원
+                </Money>
+              </ListBottom>
+            </ListItems>
+          ))}
+        </ListContainer>
+      </ListWrapper>
+    </>
+  );
+};
 
 const MainImgContainer = styled.div`
   width: 100%;
-  height: 700px;
-  padding-bottom: 20px;
+  height: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(${MainImg});
+  background-size: cover;
 `;
 
 const MainImgFont = styled.b`
-  position: absolute;
-  right: 35%;
-  bottom: 40%;
-  font-size: 45px;
-  font-weight: lighter;
-  color: white;
-  z-index: 1;
+  width: 75%;
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 51px;
+  color: ${({ theme }) => theme.color.white};
+  font-family: ${({ theme }) => theme.font.nanum};
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+`;
+
+const MainImgHelp = styled.b`
+  color: ${({ theme }) => theme.color.main};
+`;
+
+const WhiteFont = styled.b`
+  color: ${({ theme }) => theme.color.white};
 `;
 
 const SearchBarArea = styled.div`
   width: 100%;
   height: 300px;
-`;
-
-const SearchBarContainer = styled.div`
-  position: absolute;
-  direction: row;
-  left: 30%;
-  padding-top: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const SelectStyle = styled.select`
-  border: solid black;
-  padding: 9px 10px 9px 10px;
+  width: 170px;
+  height: 45px;
+  border: 2px solid ${({ theme }) => theme.color.gray900};
   border-radius: 4px;
+  margin-right: 20px;
+  text-align: center;
+  font-weight: 400;
+  font-family: ${({ theme }) => theme.font.arita};
+  font-size: 20px;
+  line-height: 20px;
+  color: ${({ theme }) => theme.color.mainblack};
+  cursor: pointer;
+  appearance: none;
+  background: url(${SortArrow}) no-repeat right 15px center;
+  padding-right: 10px;
 `;
 
 const SearchBarInput = styled.input`
   width: 500px;
-  margin-left: 20px;
-  border: solid black;
-  padding: 10px 10px 10px 15px;
+  height: 24px;
   border-radius: 4px;
+  font-size: 24px;
+  font-family: ${({ theme }) => theme.font.arita};
+  ::placeholder {
+    font-weight: 400;
+    line-height: 24px;
+  }
 `;
 
-const SearchFont = styled.img`
-  position: absolute;
-  font-size: 24px;
-  z-index: 1;
-  left: 93%;
-  bottom: 6%;
+const SearchFontTag = styled.img`
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
 `;
 
 const ListContainer = styled.ul`
+  width: 80%;
   display: flex;
-  position: absolute;
-  width: 100%;
   list-style: none;
-  justify-content: space-around;
   flex-flow: wrap;
+  justify-content: center;
 `;
+
 const ListItems = styled.li`
   width: 500px;
   height: 400px;
-  margin-bottom: 50px;
+  margin: 0 40px 5% 0;
   border-radius: 12px;
-  direction: row;
   box-shadow: 3px 3px 5px 3px #b6b6b6;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
-const ListImg = styled.img`
+const ListImgTag = styled.img`
   width: 500px;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 `;
 
-const ListTitle = styled.h3`
-  padding: 10px 0px 5px 25px;
-`;
-
 const ListContents = styled.div`
-  padding: 10px 0px 5px 25px;
+  color: ${({ theme }) => theme.color.gray900};
 `;
 
-const Main = () => {
-  return (
-    <MainStyle>
-      <Header />
-      <MainImgContainer>
-        <MainImg src={mainImg}></MainImg>
-        <MainImgFont>
-          프로젝트 비용 걱정 그만하고 일단 하세요{" "}
-          <div style={{ fontWeight: "400" }}>
-            <b style={{ color: "#3faf0d" }}>저희가 도와줄게요</b>, MARADI
-          </div>
-        </MainImgFont>
-      </MainImgContainer>
-      <SearchBarArea>
-        <SearchBarContainer>
-          <SelectStyle name="" id="">
-            <option value="">정렬순서</option>
-            <option value="">추천순</option>
-            <option value="">인기순</option>
-          </SelectStyle>
+const SearchWrapper = styled.div`
+  display: flex;
+`;
 
-          <SearchBarInput
-            type="text"
-            placeholder="찾으시는 프로젝트가 있나요?"
-          ></SearchBarInput>
-          <SearchFont src={searchFont} />
-        </SearchBarContainer>
-      </SearchBarArea>
-      <ListContainer>
-        <ListItems>
-          <ListImg src={listImg} />
-          <ListTitle>제목</ListTitle>
-          <ListContents>내용</ListContents>
-        </ListItems>
-        <ListItems>
-          <ListImg src={listImg} />
-          <ListTitle>제목</ListTitle>
-          <ListContents>내용</ListContents>
-        </ListItems>
-        <ListItems>
-          <ListImg src={listImg} />
-          <ListTitle>제목</ListTitle>
-          <ListContents>내용</ListContents>
-        </ListItems>
-        <ListItems>
-          <ListImg src={listImg} />
-          <ListTitle>제목</ListTitle>
-          <ListContents>내용</ListContents>
-        </ListItems>
-      </ListContainer>
-    </MainStyle>
-  );
-};
+const InputWrapper = styled.div`
+  width: 700px;
+  display: flex;
+  border: 2px solid ${({ theme }) => theme.color.gray900};
+  border-radius: 4px;
+  align-items: center;
+  justify-content: space-around;
+`;
+
+const ListWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ListBottom = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+`;
+
+const RegisterDate = styled.span`
+  font-size: 14px;
+  font-weight: 400;
+  font-family: ${({ theme }) => theme.font.arita};
+  line-height: 14px;
+  color: ${({ theme }) => theme.color.gray700};
+  display: flex;
+  flex-direction: column-reverse;
+`;
+
+const Money = styled.span`
+  color: ${({ theme }) => theme.color.darkmain};
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 24px;
+  font-family: ${({ theme }) => theme.font.arita};
+`;
+
+const TitleWrapper = styled.div`
+  padding: 0 20px 0 20px;
+`;
 
 export default Main;
