@@ -21,20 +21,24 @@ const LoginModal = () => {
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 40vh;
+  height: 70%;
   background-image: url("${ModalBackgroundImg}");
   border-radius: 0 0 10px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around
+  justify-content: space-around;
 `;
 
 const LoginText = styled.span`
+  height: 30%;
   font-weight: 700;
   font-size: 32px;
   line-height: 44px;
-  margin-top: 8%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ModalBackground = styled.div`
