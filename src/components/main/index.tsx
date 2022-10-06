@@ -167,6 +167,7 @@ const ListImgTag = styled.img`
 
 const ListContents = styled.div`
   color: ${({ theme }) => theme.color.gray900};
+  margin-top: 10px;
 `;
 
 const SearchWrapper = styled.div`
