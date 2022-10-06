@@ -11,9 +11,10 @@ const Main = () => {
     if (modal) {
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "unset";
+      setTimeout(() => (document.body.style.overflow = "unset"), 1000);
     }
   }, [modal]);
+
   return (
     <>
       <Header setModal={setModal} />
@@ -161,12 +162,12 @@ const ListItems = styled.li`
 
 const ListImgTag = styled.img`
   width: 500px;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  border-radius: 12px 12px 0 0;
 `;
 
 const ListContents = styled.div`
   color: ${({ theme }) => theme.color.gray900};
+  margin-top: 10px;
 `;
 
 const SearchWrapper = styled.div`
@@ -207,7 +208,7 @@ const RegisterDate = styled.span`
 
 const Money = styled.span`
   color: ${({ theme }) => theme.color.darkmain};
-  font-weight: 400;
+  font-weight: bold;
   font-size: 24px;
   line-height: 24px;
   font-family: ${({ theme }) => theme.font.arita};
