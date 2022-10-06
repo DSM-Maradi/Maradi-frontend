@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import {
   ModalBackgroundImg,
   Google,
@@ -6,26 +6,43 @@ import {
   Github,
   XButton,
 } from "../../assets/img";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 interface PropsType {
   setModal: (modal: boolean) => void;
 }
 
+interface ModalProps {
+  modalVisible: boolean;
+}
+
 const LoginModal = ({ setModal }: PropsType) => {
+  const [modalVisible, setModalVisible] = useState<boolean>(true);
   const backgroundRef = useRef<HTMLDivElement>(null);
   const ClickModal = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === backgroundRef.current) {
-      setModal(false);
+    if (e.target === backgroundRef.current && modalVisible) {
+      setModalVisible(false);
+      setTimeout(() => {
+        setModal(false);
+      }, 600);
     }
   };
   return (
-    <ModalBackground ref={backgroundRef} onClick={ClickModal}>
-      <ModalWrapper>
+    <ModalBackground
+      modalVisible={modalVisible}
+      ref={backgroundRef}
+      onClick={ClickModal}
+    >
+      <ModalWrapper modalVisible={modalVisible}>
         <XImage
           src={XButton}
           onClick={() => {
-            setModal(false);
+            if (modalVisible) {
+              setModalVisible(false);
+              setTimeout(() => {
+                setModal(false);
+              }, 600);
+            }
           }}
           alt="Back Button"
         />
@@ -42,24 +59,6 @@ const LoginModal = ({ setModal }: PropsType) => {
     </ModalBackground>
   );
 };
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const fadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-`;
 
 const XImage = styled.img`
   width: 15px;
@@ -91,15 +90,32 @@ const LoginText = styled.span`
   align-items: center;
 `;
 
-const ModalBackground = styled.div`
+const ModalBackground = styled.div<ModalProps>`
   width: 100%;
   height: 100vh;
   position: fixed;
   display: grid;
   place-content: center;
+
+  @keyframes fadeIn {
+    0% {
+      background-color: rgba(0, 0, 0, 0);
+    }
+    100% {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+  @keyframes fadeOut {
+    0% {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    100% {
+      background-color: rgba(0, 0, 0, 0);
+    }
+  }
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
-  animation: ${(modal) => (modal ? fadeIn : fadeOut)} 1s;
+  animation: ${(props) => (props.modalVisible ? "fadeIn" : "fadeOut")} 0.6s;
 `;
 
 const Image = styled.img`
@@ -121,7 +137,7 @@ const WelcomeText = styled.span`
   line-height: 44px;
 `;
 
-const ModalWrapper = styled.div`
+const ModalWrapper = styled.div<ModalProps>`
   width: 500px;
   height: 500px;
   background-color: ${({ theme }) => theme.color.white};
@@ -131,25 +147,24 @@ const ModalWrapper = styled.div`
   justify-content: space-between;
   border-radius: 10px;
   z-index: 3;
-  animation: ${(modal) => (modal ? slideIn : slideOut)} 0.6s;
-`;
-
-const slideIn = keyframes`
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0%);
-  }
-`;
-
-const slideOut = keyframes`
-  from {
+  @keyframes slideIn {
+    0% {
+      transform: translateY(150%);
+    }
+    100% {
       transform: translateY(0%);
+    }
   }
-  to {
-      transform: translateY(100%);
+  @keyframes slideOut {
+    0% {
+      transform: translateY(0%);
+    }
+    100% {
+      transform: translateY(130%);
+    }
   }
+
+  animation: ${(props) => (props.modalVisible ? "slideIn" : "slideOut")} 0.6s;
 `;
 
 export default LoginModal;
