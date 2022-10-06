@@ -208,7 +208,7 @@ const RegisterDate = styled.span`
 
 const Money = styled.span`
   color: ${({ theme }) => theme.color.darkmain};
-  font-weight: 400;
+  font-weight: bold;
   font-size: 24px;
   line-height: 24px;
   font-family: ${({ theme }) => theme.font.arita};
