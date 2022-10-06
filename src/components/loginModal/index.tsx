@@ -6,7 +6,7 @@ import {
   Github,
   XButton,
 } from "../../assets/img";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 interface PropsType {
   setModal: (modal: boolean) => void;
@@ -18,9 +18,8 @@ interface ModalProps {
 
 const LoginModal = ({ setModal }: PropsType) => {
   const [modalVisible, setModalVisible] = useState<boolean>(true);
-  const backgroundRef = useRef<HTMLDivElement>(null);
   const ClickModal = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === backgroundRef.current && modalVisible) {
+    if (modalVisible) {
       setModalVisible(false);
       setTimeout(() => {
         setModal(false);
@@ -28,12 +27,11 @@ const LoginModal = ({ setModal }: PropsType) => {
     }
   };
   return (
-    <ModalBackground
-      modalVisible={modalVisible}
-      ref={backgroundRef}
-      onClick={ClickModal}
-    >
-      <ModalWrapper modalVisible={modalVisible}>
+    <ModalBackground modalVisible={modalVisible} onClick={ClickModal}>
+      <ModalWrapper
+        modalVisible={modalVisible}
+        onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
+      >
         <XImage
           src={XButton}
           onClick={() => {
