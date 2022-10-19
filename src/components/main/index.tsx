@@ -2,23 +2,11 @@ import Header from "../common/header";
 import styled from "styled-components";
 import { MainImg, SearchFont, ListImg, SortArrow } from "../../assets/img";
 import { ProjectList } from "../../constance/projectlist";
-import { useState, useEffect } from "react";
-import LoginModal from "../loginModal";
 
 const Main = () => {
-  const [modal, setModal] = useState<boolean>(false);
-  useEffect(() => {
-    if (modal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      setTimeout(() => (document.body.style.overflow = "unset"), 1000);
-    }
-  }, [modal]);
-
   return (
     <>
-      <Header setModal={setModal} />
-      {modal && <LoginModal setModal={setModal} />}
+      <Header />
       <MainImgContainer>
         <MainImgFont>
           프로젝트 비용 걱정 그만하고 일단 하세요.
