@@ -36,7 +36,7 @@ const Header = () => {
               <NameText onClick={() => setNameModal(!nameModal)}>
                 zㅣ존민성
               </NameText>
-              {nameModal && <NameList />}
+              {nameModal && <NameList setLogin={setLogin} />}
             </>
           )}
         </HeaderItems>
@@ -52,6 +52,7 @@ const NameText = styled.span`
   font-size: 20px;
   line-height: 20px;
   cursor: pointer;
+  user-select: none;
 `;
 
 const HeaderContainer = styled.header`
