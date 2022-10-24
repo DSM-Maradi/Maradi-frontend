@@ -125,13 +125,16 @@ const Money = styled.span`
 `;
 
 const List = styled.div`
-  width: 140px;
+  width: 144px;
   height: 45px;
   color: ${({ theme }) => theme.color.black};
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid ${({ theme }) => theme.color.gray700};
+  :hover {
+    background: ${({ theme }) => theme.color.gray700};
+  }
 `;
 
 const ListLink = styled(Link)`
@@ -145,6 +148,9 @@ const SmallList = styled.div`
   transform: translate(100px, 50px);
   border-radius: 10px;
   background: ${({ theme }) => theme.color.white};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Image = styled.img`
