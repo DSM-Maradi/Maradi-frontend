@@ -7,7 +7,7 @@ import NameList from "./nameList";
 
 const Header = () => {
   const [modal, setModal] = useState<boolean>(false);
-  const [login, setLogin] = useState<boolean>(true);
+  const [login, setLogin] = useState<boolean>(false);
   const [nameModal, setNameModal] = useState<boolean>(false);
   useEffect(() => {
     if (modal) {
@@ -28,7 +28,8 @@ const Header = () => {
           <ItemLink to="">프로젝트</ItemLink>
           {!login ? (
             <div onClick={() => setModal(true)}>
-              <ItemLink to="">로그인</ItemLink>/
+              <ItemLink to="">로그인</ItemLink>
+              <span>/</span>
               <ItemLink to="">회원가입</ItemLink>
             </div>
           ) : (
@@ -86,6 +87,9 @@ const MainLogoFont = styled.strong`
 const ItemLink = styled(Link)`
   text-decoration: none;
   color: ${({ theme }) => theme.color.black};
+  :hover {
+    text-decoration: underline;
+  }
 `;
 
 const HeaderLogo = styled(Link)`

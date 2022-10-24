@@ -53,6 +53,9 @@ const Items = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 3;
+  :hover {
+    background: ${({ theme }) => theme.color.gray700};
+  }
 `;
 
 const Wrapper = styled(Link)`
