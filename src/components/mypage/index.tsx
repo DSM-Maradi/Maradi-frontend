@@ -12,11 +12,11 @@ const MyPage = () => {
       <ProjectWrapper>
         <Text>나의 프로젝트</Text>
         <ListWrapper>
-          {ProjectList.map((e, index) => {
+          {ProjectList.map((e) => {
             return (
               <ProjectCard
                 key={e.id}
-                index={index}
+                index={e.id}
                 title={e.title}
                 text={e.text}
                 date={e.date}

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { ThreeDot, ListImg } from "../../../assets/img";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 
 interface PropsType {
   index: number;
@@ -24,7 +23,6 @@ const ProjectCard = ({
   checked,
   setChecked,
 }: PropsType) => {
-  const [initial, setInitial] = useState<boolean>(false);
   return (
     <ListItems>
       <ImgWrapper>
@@ -32,11 +30,10 @@ const ProjectCard = ({
           src={ThreeDot}
           onClick={() => {
             index !== checked ? setChecked(index) : setChecked(-1);
-            setInitial(!initial);
           }}
           alt="프로젝트 수정 및 삭제"
         />
-        {checked === index && initial && (
+        {checked === index && (
           <SmallList>
             <ListLink to="">
               <List>수정</List>
