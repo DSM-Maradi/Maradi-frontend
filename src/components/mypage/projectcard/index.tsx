@@ -29,7 +29,7 @@ const ProjectCard = ({
         <Image
           src={ThreeDot}
           onClick={() => {
-            index !== checked ? setChecked(index) : setChecked(-1);
+            setChecked(index !== checked ? index : -1);
           }}
           alt="프로젝트 수정 및 삭제"
         />
@@ -71,6 +71,28 @@ const ListItems = styled.li`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  cursor: pointer;
+  @keyframes slideUp {
+    0% {
+      transform: translateY(0%);
+    }
+    100% {
+      transform: translateY(-5%);
+    }
+  }
+  @keyframes slideDown {
+    0% {
+      transform: translateY(-5%);
+    }
+    100% {
+      transform: translateY(0%);
+    }
+  }
+  animation: slideDown 0.4s;
+  :hover {
+    animation: slideUp 0.4s;
+    animation-fill-mode: forwards;
+  }
 `;
 
 const ListContents = styled.div`
@@ -139,6 +161,7 @@ const ImgWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   overflow: hidden;
+  border-radius: 12px 12px 0 0;
 `;
 
 export default ProjectCard;
