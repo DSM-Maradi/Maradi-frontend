@@ -146,6 +146,28 @@ const ListItems = styled.li`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  cursor: pointer;
+  @keyframes slideUp {
+    0% {
+      transform: translateY(0%);
+    }
+    100% {
+      transform: translateY(-5%);
+    }
+  }
+  @keyframes slideDown {
+    0% {
+      transform: translateY(-5%);
+    }
+    100% {
+      transform: translateY(0%);
+    }
+  }
+  animation: slideDown 0.4s;
+  :hover {
+    animation: slideUp 0.4s;
+    animation-fill-mode: forwards;
+  }
 `;
 
 const ListImgTag = styled.img`
