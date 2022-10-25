@@ -8,4 +8,6 @@ export { default as Github } from "./github.svg";
 export { default as Facebook } from "./facebook.svg";
 export { default as SortArrow } from "./sortarrow.svg";
 export { default as XButton } from "./xbutton.svg";
+export { default as Arrow } from "./arrow.svg";
+export { default as ImgUpload } from "./imgUpload.svg";
 export { default as ThreeDot } from "./three_dot.svg";
