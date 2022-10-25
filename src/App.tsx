@@ -1,7 +1,7 @@
 import StyleProvider from "./styles";
-import { Route, Routes } from "react-router";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Main from "./components/main";
-import { BrowserRouter } from "react-router-dom";
+import MyPage from "./components/mypage";
 
 const App = () => {
   return (
@@ -9,6 +9,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Main />} />
+          <Route path="/mypage" element={<MyPage />} />
         </Routes>
       </BrowserRouter>
     </StyleProvider>
