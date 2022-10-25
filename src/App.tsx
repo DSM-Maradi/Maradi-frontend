@@ -1,8 +1,7 @@
 import StyleProvider from "./styles";
-import { Route, Routes } from "react-router";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Main from "./components/main";
 import CreateProject from "./components/project";
-import { BrowserRouter } from "react-router-dom";
 
 const App = () => {
   return (
