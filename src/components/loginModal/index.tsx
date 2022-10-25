@@ -26,6 +26,7 @@ const LoginModal = ({ setModal }: PropsType) => {
       }, 600);
     }
   };
+
   return (
     <ModalBackground modalVisible={modalVisible} onClick={ClickModal}>
       <ModalWrapper
