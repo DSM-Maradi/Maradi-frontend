@@ -2,23 +2,11 @@ import Header from "../common/header";
 import styled from "styled-components";
 import { MainImg, SearchFont, ListImg, SortArrow } from "../../assets/img";
 import { ProjectList } from "../../constance/projectlist";
-import { useState, useEffect } from "react";
-import LoginModal from "../loginModal";
 
 const Main = () => {
-  const [modal, setModal] = useState<boolean>(false);
-  useEffect(() => {
-    if (modal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      setTimeout(() => (document.body.style.overflow = "unset"), 1000);
-    }
-  }, [modal]);
-
   return (
     <>
-      <Header setModal={setModal} />
-      {modal && <LoginModal setModal={setModal} />}
+      <Header />
       <MainImgContainer>
         <MainImgFont>
           프로젝트 비용 걱정 그만하고 일단 하세요.
@@ -158,6 +146,28 @@ const ListItems = styled.li`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  cursor: pointer;
+  @keyframes slideUp {
+    0% {
+      transform: translateY(0%);
+    }
+    100% {
+      transform: translateY(-5%);
+    }
+  }
+  @keyframes slideDown {
+    0% {
+      transform: translateY(-5%);
+    }
+    100% {
+      transform: translateY(0%);
+    }
+  }
+  animation: slideDown 0.4s;
+  :hover {
+    animation: slideUp 0.4s;
+    animation-fill-mode: forwards;
+  }
 `;
 
 const ListImgTag = styled.img`
