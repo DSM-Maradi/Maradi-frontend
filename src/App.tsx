@@ -1,7 +1,7 @@
 import StyleProvider from "./styles";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Main from "./components/main";
-import CreateProject from "./components/project";
+import CreateProject from "./components/createproject";
 import MyPage from "./components/mypage";
 
 const App = () => {
