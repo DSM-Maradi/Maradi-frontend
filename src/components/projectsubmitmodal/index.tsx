@@ -1,3 +1,4 @@
+import { useState, useRef, useMemo } from "react";
 import styled from "styled-components";
 import { ImgUpload, XButton } from "../../assets/img";
 
@@ -5,47 +6,107 @@ interface PropsType {
   setModal: (modal: boolean) => void;
 }
 
+interface UploadProps {
+  file: File;
+  thumbnail: string;
+  type: string;
+}
+
 const ProjectSubmitModal = ({ setModal }: PropsType) => {
+  const [image, setImage] = useState<UploadProps | null>();
+  const [simpleIntroduce, setSimpleIntroduce] = useState<string>("");
+  const RefValue = useRef<HTMLInputElement>(null);
+  const onClick = () => {
+    setModal(false);
+  };
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = e.target.files;
+    if (fileList && fileList[0]) {
+      const url = URL.createObjectURL(fileList[0]);
+      setImage({
+        file: fileList[0],
+        thumbnail: url,
+        type: fileList[0].type.slice(0, 5),
+      });
+    }
+  };
+  const showImage = useMemo(() => {
+    if (!image && image === undefined) {
+      console.log("chekc");
+      return (
+        <>
+          <UploadImg src={ImgUpload} alt="이미지 업로드 사진" />
+          <UploadFont>이미지를 업로드 해주세요</UploadFont>
+        </>
+      );
+    }
+    return <Image src={image?.thumbnail} alt={image?.type} />;
+  }, [image]);
   return (
-    <ModalContainer>
-      <ModalWrapper>
-        <XBtn src={XButton} onClick={() => setModal(false)}></XBtn>
+    <ModalContainer onClick={onClick}>
+      <ModalWrapper
+        onClick={(e: React.MouseEvent<HTMLFormElement>) => e.stopPropagation()}
+      >
+        <XWrapper>
+          <XBtn src={XButton} onClick={onClick}></XBtn>
+        </XWrapper>
         <ImgBlock>
           <ImgUploadContainer htmlFor="input-file">
-            <UploadImg src={ImgUpload} />
-            <UploadFont>이미지를 업로드 해주세요</UploadFont>
+            {showImage}
+
             <FileSelector
+              ref={RefValue}
               type="file"
               id="input-file"
               accept="image/jpg, image/png, image/jpeg"
+              onChange={onChange}
+              onClick={() => RefValue.current?.click()}
             />
           </ImgUploadContainer>
-
-          <UploadTextarea placeholder="간단한 설명을 작성해주세요." />
+          <UploadTextarea
+            value={simpleIntroduce}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+              setSimpleIntroduce(e.target.value)
+            }
+            placeholder="간단한 설명을 작성해주세요."
+          />
         </ImgBlock>
-        <PostForm onClick={() => setModal(false)}>
-          <PostFormSpan>제출하기</PostFormSpan>
-        </PostForm>
+        <PostFormWrapper>
+          <PostForm onClick={() => setModal(false)}>
+            <PostFormSpan>제출하기</PostFormSpan>
+          </PostForm>
+        </PostFormWrapper>
       </ModalWrapper>
     </ModalContainer>
   );
 };
 
-const PostForm = styled.form`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  padding: 14px 18px;
-  margin: 10px;
+const Image = styled.img`
+  width: 165px;
+  height: 120px;
+`;
 
+const PostFormWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const XWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const PostForm = styled.div`
   width: 92px;
   height: 48px;
+  padding: 14px 18px;
+  margin: 10px;
   background: ${({ theme }) => theme.color.main};
   border-radius: 5px;
   justify-content: center;
   cursor: pointer;
-
-  float: right;
 `;
 
 const PostFormSpan = styled.span`
@@ -54,7 +115,6 @@ const PostFormSpan = styled.span`
 `;
 
 const XBtn = styled.img`
-  float: right;
   cursor: pointer;
   width: 15px;
   height: 15px;
@@ -68,8 +128,9 @@ const FileSelector = styled.input`
 `;
 
 const ImgBlock = styled.div`
+  width: 90%;
   display: flex;
-  margin-top: 60px;
+  justify-content: space-around;
 `;
 const UploadTextarea = styled.textarea`
   width: 297px;
@@ -78,10 +139,10 @@ const UploadTextarea = styled.textarea`
   border-radius: 8px;
   resize: none;
   padding: 20px 20px;
-  margin-left: 20px;
   background-color: ${({ theme }) => theme.color.gray100};
+  font-family: ${({ theme }) => theme.font.noto};
   ::placeholder {
-    font-size: 12px;
+    color: ${({ theme }) => theme.color.gray900};
   }
 `;
 
@@ -96,15 +157,16 @@ const ModalContainer = styled.div`
   height: 100vh;
   z-index: 2;
 `;
-const ModalWrapper = styled.div`
-  position: relative;
+const ModalWrapper = styled.form`
   width: 550px;
   height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   text-align: center;
   background-color: ${({ theme }) => theme.color.white};
-  align-items: center;
   z-index: 3;
-
   span {
     color: ${({ theme }) => theme.color.white};
     font-size: 15px;
@@ -116,7 +178,6 @@ const ImgUploadContainer = styled.label`
   width: 165px;
   height: 120px;
   cursor: pointer;
-  margin-left: 30px;
   border-radius: 3.75px;
   flex-direction: column;
   justify-content: center;
