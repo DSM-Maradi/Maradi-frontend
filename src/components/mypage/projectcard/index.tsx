@@ -24,37 +24,39 @@ const ProjectCard = ({
   setChecked,
 }: PropsType) => {
   return (
-    <ListItems>
-      <ImgWrapper>
-        <Image
-          src={ThreeDot}
-          onClick={() => {
-            setChecked(index !== checked ? index : -1);
-          }}
-          alt="프로젝트 수정 및 삭제"
-        />
-        {checked === index && (
-          <SmallList>
-            <ListLink to="">
-              <List>수정</List>
-            </ListLink>
-            <ListLink to="">
-              <List>삭제</List>
-            </ListLink>
-          </SmallList>
-        )}
-      </ImgWrapper>
-      <TitleWrapper>
-        <h3>{title}</h3>
-        <ListContents>{text}</ListContents>
-      </TitleWrapper>
-      <ListBottom>
-        <RegisterDate>등록날짜 | {date}</RegisterDate>
-        <Money>
-          {goalMoney}원 / {nowMoney}원
-        </Money>
-      </ListBottom>
-    </ListItems>
+    <>
+      <ListItems checked={checked} index={index}>
+        <ImgWrapper>
+          <Image
+            src={ThreeDot}
+            onClick={() => {
+              setChecked(index !== checked ? index : -1);
+            }}
+            alt="프로젝트 수정 및 삭제"
+          />
+          {checked === index ? (
+            <SmallList checked={checked} idx={index}>
+              <ListLink to="">
+                <List>수정</List>
+              </ListLink>
+              <ListLink to="">
+                <List>삭제</List>
+              </ListLink>
+            </SmallList>
+          ) : null}
+        </ImgWrapper>
+        <TitleWrapper>
+          <h3>{title}</h3>
+          <ListContents>{text}</ListContents>
+        </TitleWrapper>
+        <ListBottom>
+          <RegisterDate>등록날짜 | {date}</RegisterDate>
+          <Money>
+            {goalMoney}원 / {nowMoney}원
+          </Money>
+        </ListBottom>
+      </ListItems>
+    </>
   );
 };
 
@@ -62,7 +64,7 @@ const TitleWrapper = styled.div`
   padding: 0 20px;
 `;
 
-const ListItems = styled.li`
+const ListItems = styled.li<{ checked: number; index: number }>`
   width: 500px;
   height: 400px;
   margin: 0 40px 5% 0;
@@ -72,6 +74,8 @@ const ListItems = styled.li`
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
+  z-index: ${({ checked, index }) =>
+    checked !== -1 && index === checked ? 2 : 1};
   @keyframes slideUp {
     0% {
       transform: translateY(0%);
@@ -88,9 +92,16 @@ const ListItems = styled.li`
       transform: translateY(0%);
     }
   }
-  animation: slideDown 0.4s;
+  animation: slideDown
+    ${({ checked, index }) => (checked !== -1 && index === checked ? 0 : 0.4)}s;
+  transform: translateY(
+    ${({ checked, index }) =>
+      checked !== -1 && index === checked ? "-5%" : "0%"}
+  );
   :hover {
-    animation: slideUp 0.4s;
+    animation: slideUp
+      ${({ checked, index }) =>
+        checked !== -1 && index === checked ? 0 : 0.4}s;
     animation-fill-mode: forwards;
   }
 `;
@@ -141,7 +152,7 @@ const ListLink = styled(Link)`
   text-decoration: none;
 `;
 
-const SmallList = styled.div`
+const SmallList = styled.div<{ checked: number; idx: number }>`
   width: 144px;
   height: 90px;
   position: absolute;
@@ -151,6 +162,7 @@ const SmallList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1;
 `;
 
 const Image = styled.img`

@@ -27,11 +27,11 @@ const Header = () => {
           <ItemLink to="">명예의 전당</ItemLink>
           <ItemLink to="">프로젝트</ItemLink>
           {!login ? (
-            <div onClick={() => setModal(true)}>
+            <Text onClick={() => setModal(true)}>
               <ItemLink to="">로그인</ItemLink>
               <span>/</span>
               <ItemLink to="">회원가입</ItemLink>
-            </div>
+            </Text>
           ) : (
             <>
               <NameText onClick={() => setNameModal(!nameModal)}>
@@ -46,6 +46,12 @@ const Header = () => {
     </>
   );
 };
+
+const Text = styled.div`
+  :hover {
+    text-decoration: underline;
+  }
+`;
 
 const NameText = styled.span`
   font-family: ${({ theme }) => theme.font.arita};
