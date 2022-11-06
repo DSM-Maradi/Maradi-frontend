@@ -11,3 +11,7 @@ export { default as XButton } from "./xbutton.svg";
 export { default as Arrow } from "./arrow.svg";
 export { default as ImgUpload } from "./imgUpload.svg";
 export { default as ThreeDot } from "./three_dot.svg";
+export { default as RoundProfileImg } from "./roundProfileImg.png";
+export { default as CommentImg } from "./commentImg.svg";
+export { default as Like } from "./like.svg";
+export { default as Share } from "./share.svg";

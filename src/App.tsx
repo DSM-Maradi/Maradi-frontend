@@ -3,6 +3,7 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Main from "./components/main";
 import CreateProject from "./components/createproject";
 import MyPage from "./components/mypage";
+import SeeProject from "./components/seeproject";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
           <Route path="/" element={<Main />} />
           <Route path="/project/createProject" element={<CreateProject />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/project/seeProject" element={<SeeProject />} />
         </Routes>
       </BrowserRouter>
     </StyleProvider>
