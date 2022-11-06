@@ -13,7 +13,7 @@ const NameList = ({ setLogin }: PropsType) => {
           <span>마이페이지</span>
         </Items>
       </Wrapper>
-      <Wrapper to="/project/createProject">
+      <Wrapper to="/createProject">
         <Items>
           <span>프로젝트 생성</span>
         </Items>
