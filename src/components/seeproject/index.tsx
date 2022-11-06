@@ -3,24 +3,41 @@ import Header from "../common/header";
 import { RoundProfileImg, CommentImg, Like, Share } from "../../assets/img";
 
 function SeeProject() {
+  const dummyData: { id: number; name: string; value: string }[] = [
+    {
+      id: 1,
+      name: "조상현",
+      value:
+        "에휴 이준서 병신 이따구로 글 쓰면 누가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어 너같은 새끼들때문에 세상이 망하는거임 에휴 이준서 병신 이따구로 글 쓰면 누 가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어너같은 새끼들때문에 세상이 망하는거임",
+    },
+    {
+      id: 2,
+      name: "조상현",
+      value:
+        "에휴 이준서 병신 이따구로 글 쓰면 누가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어 너같은 새끼들때문에 세상이 망하는거임 에휴 이준서 병신 이따구로 글 쓰면 누 가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어너같은 새끼들때문에 세상이 망하는거임",
+    },
+    {
+      id: 3,
+      name: "조상현",
+      value:
+        "에휴 이준서 병신 이따구로 글 쓰면 누가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어 너같은 새끼들때문에 세상이 망하는거임 에휴 이준서 병신 이따구로 글 쓰면 누 가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어너같은 새끼들때문에 세상이 망하는거임",
+    },
+  ];
   return (
     <>
       <Header />
       <Wrapper>
         <MainContainer>
           <ProjectTitle>이태원에서 일어난 끔찍한 사건</ProjectTitle>
-
           <Line1 />
-
           <SideBar>
             <LikeImg>
-              <img src={Like} />
+              <img src={Like} alt="좋아요" />
               <LikeNum>10</LikeNum>
             </LikeImg>
             <SideBarHr />
-            <ShareImg src={Share}></ShareImg>
+            <ShareImg src={Share} alt="공유 이미지" />
           </SideBar>
-
           <ProjectContents>
             윤희근 경찰청장은 “사고가 발생하기 직전 현장의 심각성을 알리는 112
             신고가 다수 있었지만 현장의 대응은 미흡했다”며 경찰청에 독립적인
@@ -98,56 +115,29 @@ function SeeProject() {
             범정부 차원의 재발방지 대책 논의에도 적극 참여해 다시는 이러한
             사고가 반복되지 않도록 경찰의 역할과 책임을 다하겠다”고 말했다.
           </ProjectContents>
-
           <FundingProfileContainer>
-            <img src={RoundProfileImg}></img>
+            <img src={RoundProfileImg} alt="프로필" />
             <NameAndBtn>
               <UserName>앵무새</UserName>
               <FundingBtn>펀딩하기</FundingBtn>
             </NameAndBtn>
           </FundingProfileContainer>
         </MainContainer>
-
         <Line2 />
-
         <PostCommentContainer>
-          <PostCommentInput placeholder="프로젝트에 대한 여러 평가들을 작성해주세요."></PostCommentInput>
+          <PostCommentInput placeholder="프로젝트에 대한 여러 평가들을 작성해주세요." />
           <CommentSubmitBtn>
-            <img src={CommentImg} />
+            <img src={CommentImg} alt="댓글 이미지" />
             댓글작성
           </CommentSubmitBtn>
         </PostCommentContainer>
-
         <CommentItemContainer>
-          <CommentItem>
-            <CommentUserName>조상현</CommentUserName>
-            <CommentContents>
-              에휴 이준서 병신 이따구로 글 쓰면 누가 읽어줄 주 아나 ㅉㅉ 그냥
-              죽어라 죽어 너같은 새끼들때문에 세상이 망하는거임 에휴 이준서 병신
-              이따구로 글 쓰면 누 가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어너같은
-              새끼들때문에 세상이 망하는거임
-            </CommentContents>
-          </CommentItem>
-
-          <CommentItem>
-            <CommentUserName>조상현</CommentUserName>
-            <CommentContents>
-              에휴 이준서 병신 이따구로 글 쓰면 누가 읽어줄 주 아나 ㅉㅉ 그냥
-              죽어라 죽어 너같은 새끼들때문에 세상이 망하는거임 에휴 이준서 병신
-              이따구로 글 쓰면 누 가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어너같은
-              새끼들때문에 세상이 망하는거임
-            </CommentContents>
-          </CommentItem>
-
-          <CommentItem>
-            <CommentUserName>조상현</CommentUserName>
-            <CommentContents>
-              에휴 이준서 병신 이따구로 글 쓰면 누가 읽어줄 주 아나 ㅉㅉ 그냥
-              죽어라 죽어 너같은 새끼들때문에 세상이 망하는거임 에휴 이준서 병신
-              이따구로 글 쓰면 누 가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어너같은
-              새끼들때문에 세상이 망하는거임
-            </CommentContents>
-          </CommentItem>
+          {dummyData.map((v, i) => (
+            <CommentItem key={i}>
+              <CommentUserName>{v.name}</CommentUserName>
+              <CommentContents>{v.value}</CommentContents>
+            </CommentItem>
+          ))}
         </CommentItemContainer>
       </Wrapper>
     </>
@@ -218,6 +208,11 @@ const FundingBtn = styled.button`
   cursor: pointer;
   &:active {
     color: ${({ theme }) => theme.color.main};
+  }
+  :hover {
+    color: ${({ theme }) => theme.color.main};
+    background: ${({ theme }) => theme.color.white};
+    border: 1px solid ${({ theme }) => theme.color.main};
   }
 `;
 
