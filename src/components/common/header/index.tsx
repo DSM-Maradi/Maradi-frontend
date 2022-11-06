@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { HeadLogo } from "../../../assets/img";
+import { HeadLogo, ProfileImg } from "../../../assets/img";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import LoginModal from "../../loginModal";
@@ -7,7 +7,7 @@ import NameList from "./nameList";
 
 const Header = () => {
   const [modal, setModal] = useState<boolean>(false);
-  const [login, setLogin] = useState<boolean>(false);
+  const [login, setLogin] = useState<boolean>(true);
   const [nameModal, setNameModal] = useState<boolean>(false);
   useEffect(() => {
     if (modal) {
@@ -24,7 +24,7 @@ const Header = () => {
           <MainLogoFont>MARADI</MainLogoFont>
         </HeaderLogo>
         <HeaderItems>
-          <ItemLink to="">명예의 전당</ItemLink>
+          <ItemLink to="/hall">명예의 전당</ItemLink>
           <ItemLink to="">프로젝트</ItemLink>
           {!login ? (
             <Text onClick={() => setModal(true)}>
@@ -34,9 +34,16 @@ const Header = () => {
             </Text>
           ) : (
             <>
-              <NameText onClick={() => setNameModal(!nameModal)}>
-                zㅣ존민성
-              </NameText>
+              <ProfileWrapper>
+                <Profile
+                  src={ProfileImg}
+                  onClick={() => setNameModal(!nameModal)}
+                  alt="프로필 이미지"
+                />
+                <NameText onClick={() => setNameModal(!nameModal)}>
+                  zㅣ존민성
+                </NameText>
+              </ProfileWrapper>
               {nameModal && <NameList setLogin={setLogin} />}
             </>
           )}
@@ -46,6 +53,18 @@ const Header = () => {
     </>
   );
 };
+
+const ProfileWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Profile = styled.img`
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  cursor: pointer;
+`;
 
 const Text = styled.div`
   :hover {
@@ -70,7 +89,7 @@ const HeaderContainer = styled.header`
   justify-content: space-around;
   position: fixed;
   background-color: ${({ theme }) => theme.color.white};
-  z-index: 1;
+  z-index: 2;
   border-bottom: 1px solid #ededed;
 `;
 
@@ -78,6 +97,7 @@ const HeaderItems = styled.div`
   width: 500px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const MainLogo = styled.img`

@@ -13,7 +13,7 @@ const NameList = ({ setLogin }: PropsType) => {
           <span>마이페이지</span>
         </Items>
       </Wrapper>
-      <Wrapper to="/make-project">
+      <Wrapper to="/project/createProject">
         <Items>
           <span>프로젝트 생성</span>
         </Items>
@@ -33,7 +33,7 @@ const ListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  transform: translate(300px, 30px);
+  transform: translate(300px, 90px);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
   z-index: 4;
