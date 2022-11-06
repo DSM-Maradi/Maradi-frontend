@@ -11,3 +11,5 @@ export { default as XButton } from "./xbutton.svg";
 export { default as Arrow } from "./arrow.svg";
 export { default as ImgUpload } from "./imgUpload.svg";
 export { default as ThreeDot } from "./three_dot.svg";
+export { default as HallBackground } from "./hall_background.png";
+export { default as ProfileImg } from "./profile_image.png";

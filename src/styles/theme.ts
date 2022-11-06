@@ -14,6 +14,7 @@ const theme = {
     gray100: "#FBFBFB",
     white: "#FFFFFF",
     black: "#000000",
+    yellow: "#FAFF00",
   },
   font: {
     noto: "Noto Sans",
