@@ -8,7 +8,6 @@ import NameList from "./nameList";
 const Header = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [login, setLogin] = useState<boolean>(true);
-  const [nameModal, setNameModal] = useState<boolean>(false);
   useEffect(() => {
     if (modal) {
       document.body.style.overflow = "hidden";
@@ -34,17 +33,13 @@ const Header = () => {
             </Text>
           ) : (
             <>
-              <ProfileWrapper>
-                <Profile
-                  src={ProfileImg}
-                  onClick={() => setNameModal(!nameModal)}
-                  alt="프로필 이미지"
-                />
-                <NameText onClick={() => setNameModal(!nameModal)}>
-                  zㅣ존민성
-                </NameText>
-              </ProfileWrapper>
-              {nameModal && <NameList setLogin={setLogin} />}
+              <details>
+                <ProfileWrapper>
+                  <Profile src={ProfileImg} alt="프로필 이미지" />
+                  <NameText>zㅣ존민성</NameText>
+                </ProfileWrapper>
+                <NameList setLogin={setLogin} />
+              </details>
             </>
           )}
         </HeaderItems>
@@ -54,7 +49,7 @@ const Header = () => {
   );
 };
 
-const ProfileWrapper = styled.div`
+const ProfileWrapper = styled.summary`
   display: flex;
   align-items: center;
 `;
