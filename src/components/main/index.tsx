@@ -2,6 +2,7 @@ import Header from "../common/header";
 import styled from "styled-components";
 import { MainImg, SearchFont, ListImg, SortArrow } from "../../assets/img";
 import { ProjectList } from "../../constance/projectlist";
+import { Link } from "react-router-dom";
 
 const Main = () => {
   return (
@@ -35,25 +36,31 @@ const Main = () => {
       <ListWrapper>
         <ListContainer>
           {ProjectList.map((e) => (
-            <ListItems key={e.id}>
-              <ListImgTag src={ListImg} alt="리스트 이미지" />
-              <TitleWrapper>
-                <h3>{e.title}</h3>
-                <ListContents>{e.text}</ListContents>
-              </TitleWrapper>
-              <ListBottom>
-                <RegisterDate>등록날짜 | {e.date}</RegisterDate>
-                <Money>
-                  {e.goalMoney}원 / {e.nowMoney}원
-                </Money>
-              </ListBottom>
-            </ListItems>
+            <ListBlock onClick={() => window.scrollTo(0, 0)} to="/seeProject">
+              <ListItems key={e.id}>
+                <ListImgTag src={ListImg} alt="리스트 이미지" />
+                <TitleWrapper>
+                  <h3>{e.title}</h3>
+                  <ListContents>{e.text}</ListContents>
+                </TitleWrapper>
+                <ListBottom>
+                  <RegisterDate>등록날짜 | {e.date}</RegisterDate>
+                  <Money>
+                    {e.goalMoney}원 / {e.nowMoney}원
+                  </Money>
+                </ListBottom>
+              </ListItems>
+            </ListBlock>
           ))}
         </ListContainer>
       </ListWrapper>
     </>
   );
 };
+
+const ListBlock = styled(Link)`
+  text-decoration: none;
+`;
 
 const MainImgContainer = styled.div`
   width: 100%;
@@ -226,6 +233,7 @@ const Money = styled.span`
 
 const TitleWrapper = styled.div`
   padding: 0 20px 0 20px;
+  color: ${({ theme }) => theme.color.black};
 `;
 
 export default Main;
