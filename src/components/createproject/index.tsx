@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Arrow } from "../../assets/img";
 import { useState, useEffect } from "react";
 import ProjectSubmitModal from "../projectsubmitmodal";
+import { useNavigate } from "react-router-dom";
 
 interface InputType {
   title: string;
@@ -9,6 +10,7 @@ interface InputType {
 }
 
 const CreateProject = () => {
+  const nav = useNavigate();
   const [input, setInputs] = useState<InputType>({
     title: "",
     content: "",
@@ -51,7 +53,7 @@ const CreateProject = () => {
             />
           </div>
           <InterfaceBar>
-            <BackButton>
+            <BackButton onClick={() => nav(-1)}>
               <img src={Arrow} alt="뒤로가기 화살표" />
               <p>뒤로가기</p>
             </BackButton>
