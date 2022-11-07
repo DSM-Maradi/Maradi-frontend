@@ -12,21 +12,19 @@ const MyPage = () => {
       <ProjectWrapper>
         <Text>나의 프로젝트</Text>
         <ListWrapper>
-          {ProjectList.map((e) => {
-            return (
-              <ProjectCard
-                key={e.id}
-                index={e.id}
-                title={e.title}
-                text={e.text}
-                date={e.date}
-                goalMoney={e.goalMoney}
-                nowMoney={e.nowMoney}
-                checked={checked}
-                setChecked={setChecked}
-              />
-            );
-          })}
+          {ProjectList.map((e) => (
+            <ProjectCard
+              key={e.id}
+              index={e.id}
+              title={e.title}
+              text={e.text}
+              date={e.date}
+              goalMoney={e.goalMoney}
+              nowMoney={e.nowMoney}
+              checked={checked}
+              setChecked={setChecked}
+            />
+          ))}
         </ListWrapper>
       </ProjectWrapper>
     </Wrapper>
