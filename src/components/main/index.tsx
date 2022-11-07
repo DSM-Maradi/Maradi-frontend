@@ -36,8 +36,12 @@ const Main = () => {
       <ListWrapper>
         <ListContainer>
           {ProjectList.map((e) => (
-            <ListBlock onClick={() => window.scrollTo(0, 0)} to="/seeProject">
-              <ListItems key={e.id}>
+            <ListBlock
+              key={e.id}
+              onClick={() => window.scrollTo(0, 0)}
+              to="/seeProject"
+            >
+              <ListItems>
                 <ListImgTag src={ListImg} alt="리스트 이미지" />
                 <TitleWrapper>
                   <h3>{e.title}</h3>
