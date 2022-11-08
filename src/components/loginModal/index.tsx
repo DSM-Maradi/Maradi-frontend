@@ -111,8 +111,9 @@ const ModalBackground = styled.div<ModalProps>`
 `;
 
 const Image = styled.img`
-  height: max-content;
-  border-radius: 0 0 10px 10px;
+  width: 80px;
+  height: 80px;
+  border-radius: 100px;
   cursor: pointer;
 `;
 
