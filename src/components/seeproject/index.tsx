@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import Header from "../common/header";
-import { RoundProfileImg, CommentImg, Like, Share } from "../../assets/img";
+import {
+  RoundProfileImg,
+  CommentImg,
+  Like,
+  Share,
+  ThreeDot,
+} from "../../assets/img";
 
 function SeeProject() {
   const dummyData: { id: number; name: string; value: string }[] = [
@@ -118,7 +124,7 @@ function SeeProject() {
           <FundingProfileContainer>
             <img src={RoundProfileImg} alt="프로필" />
             <NameAndBtn>
-              <UserName>앵무새</UserName>
+              <UserName>조상현 닮은 앵무새</UserName>
               <FundingBtn>펀딩하기</FundingBtn>
             </NameAndBtn>
           </FundingProfileContainer>
@@ -133,16 +139,70 @@ function SeeProject() {
         </PostCommentContainer>
         <CommentItemContainer>
           {dummyData.map((v, i) => (
-            <CommentItem key={i}>
-              <CommentUserName>{v.name}</CommentUserName>
-              <CommentContents>{v.value}</CommentContents>
-            </CommentItem>
+            <CommentWrapper key={i}>
+              <ImgWrapper>
+                <details>
+                  <SummaryWrapper>
+                    <ThreeDotImage src={ThreeDot} />
+                  </SummaryWrapper>
+                  <DeleteButton>댓글 삭제하기</DeleteButton>
+                </details>
+              </ImgWrapper>
+              <CommentItem>
+                <CommentUserName>{v.name}</CommentUserName>
+                <CommentContents>{v.value}</CommentContents>
+              </CommentItem>
+            </CommentWrapper>
           ))}
         </CommentItemContainer>
       </Wrapper>
     </>
   );
 }
+
+const DeleteButton = styled.button`
+  position: absolute;
+  background: #ffffff;
+  border: 1px solid #b6b6b6;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  padding: 15px 20px;
+  color: ${({ theme }) => theme.color.error};
+  font-family: ${({ theme }) => theme.font.arita};
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  cursor: pointer;
+  transform: translate(-100px, 0);
+  :hover {
+    background: ${({ theme }) => theme.color.error};
+    color: ${({ theme }) => theme.color.white};
+    border: none;
+  }
+`;
+
+const SummaryWrapper = styled.summary`
+  display: flex;
+  align-items: center;
+`;
+
+const ImgWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const ThreeDotImage = styled.img`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+`;
+
+const CommentWrapper = styled.div`
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+`;
 
 const Wrapper = styled.body`
   width: 100vw;
