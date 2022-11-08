@@ -1,11 +1,5 @@
 import styled from "styled-components";
-import {
-  ModalBackgroundImg,
-  Google,
-  Facebook,
-  Github,
-  XButton,
-} from "../../assets/img";
+import { ModalBackgroundImg, Github, XButton, Naver } from "../../assets/img";
 import { useState } from "react";
 
 interface PropsType {
@@ -48,9 +42,8 @@ const LoginModal = ({ setModal }: PropsType) => {
         <LoginText>소셜 계정으로 로그인</LoginText>
         <Wrapper>
           <OAuthImgWrapper>
-            <Image src={Google} alt="Google OAuth" />
             <Image src={Github} alt="Github OAuth" />
-            <Image src={Facebook} alt="Facebook OAuth" />
+            <Image src={Naver} alt="Naver OAuth" />
           </OAuthImgWrapper>
           <WelcomeText>환영합니다 !</WelcomeText>
         </Wrapper>
@@ -118,8 +111,9 @@ const ModalBackground = styled.div<ModalProps>`
 `;
 
 const Image = styled.img`
-  height: max-content;
-  border-radius: 0 0 10px 10px;
+  width: 80px;
+  height: 80px;
+  border-radius: 100px;
   cursor: pointer;
 `;
 

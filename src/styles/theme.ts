@@ -20,6 +20,7 @@ const theme = {
     noto: "Noto Sans",
     nanum: "Nanum Gothic",
     arita: "Arita-dotum4.0(OTF)",
+    inter: "Inter",
   },
 } as const;
 

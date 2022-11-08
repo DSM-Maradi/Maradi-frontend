@@ -29,7 +29,7 @@ const ProjectCard = ({
         <ImgWrapper>
           <Image
             src={ThreeDot}
-            onClick={() => {
+            onClick={(e: React.MouseEvent<HTMLImageElement>) => {
               setChecked(index !== checked ? index : -1);
             }}
             alt="프로젝트 수정 및 삭제"

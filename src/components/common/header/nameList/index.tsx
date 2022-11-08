@@ -6,14 +6,15 @@ interface PropsType {
 }
 
 const NameList = ({ setLogin }: PropsType) => {
+  const goToTop = () => window.scrollTo(0, 0);
   return (
     <ListWrapper>
-      <Wrapper to="/mypage">
+      <Wrapper onClick={goToTop} to="/mypage">
         <Items>
           <span>마이페이지</span>
         </Items>
       </Wrapper>
-      <Wrapper to="/project/createProject">
+      <Wrapper onClick={goToTop} to="/createProject">
         <Items>
           <span>프로젝트 생성</span>
         </Items>
@@ -33,7 +34,6 @@ const ListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  transform: translate(300px, 90px);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
   z-index: 4;
