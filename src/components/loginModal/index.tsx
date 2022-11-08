@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import {
   ModalBackgroundImg,
-  Google,
   Facebook,
   Github,
   XButton,
@@ -48,7 +47,6 @@ const LoginModal = ({ setModal }: PropsType) => {
         <LoginText>소셜 계정으로 로그인</LoginText>
         <Wrapper>
           <OAuthImgWrapper>
-            <Image src={Google} alt="Google OAuth" />
             <Image src={Github} alt="Github OAuth" />
             <Image src={Facebook} alt="Facebook OAuth" />
           </OAuthImgWrapper>
