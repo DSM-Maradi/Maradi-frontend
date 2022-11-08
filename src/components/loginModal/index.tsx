@@ -1,10 +1,5 @@
 import styled from "styled-components";
-import {
-  ModalBackgroundImg,
-  Facebook,
-  Github,
-  XButton,
-} from "../../assets/img";
+import { ModalBackgroundImg, Github, XButton, Naver } from "../../assets/img";
 import { useState } from "react";
 
 interface PropsType {
@@ -48,7 +43,7 @@ const LoginModal = ({ setModal }: PropsType) => {
         <Wrapper>
           <OAuthImgWrapper>
             <Image src={Github} alt="Github OAuth" />
-            <Image src={Facebook} alt="Facebook OAuth" />
+            <Image src={Naver} alt="Naver OAuth" />
           </OAuthImgWrapper>
           <WelcomeText>환영합니다 !</WelcomeText>
         </Wrapper>
