@@ -26,6 +26,13 @@ const CreateProject = () => {
       [name]: value,
     });
   };
+  const upload = () => {
+    if (!input.title || !input.content) {
+      alert("내용을 다시 확인해주세요.");
+      return;
+    }
+    setModal(true);
+  };
   useEffect(() => {
     if (modal) {
       document.body.style.overflow = "hidden";
@@ -61,7 +68,7 @@ const CreateProject = () => {
               <Button>
                 <ButtonSpan>임시저장</ButtonSpan>
               </Button>
-              <Button onClick={() => setModal(true)}>
+              <Button onClick={upload}>
                 <ButtonSpan>업로드 하기</ButtonSpan>
               </Button>
             </ButtonWrapper>
