@@ -54,13 +54,6 @@ function SeeProject() {
         click: !click,
         money: 0,
       });
-
-      console.log(money);
-    } else if (click === true && money == 0) {
-      setChange({
-        click: !click,
-        money: 0,
-      });
     }
   };
 
