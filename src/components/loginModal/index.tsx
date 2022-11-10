@@ -20,7 +20,7 @@ const LoginModal = ({ setModal }: PropsType) => {
       }, 600);
     }
   };
-
+  const onClickLogin = (e: any) => {};
   return (
     <ModalBackground modalVisible={modalVisible} onClick={ClickModal}>
       <ModalWrapper
@@ -42,8 +42,8 @@ const LoginModal = ({ setModal }: PropsType) => {
         <LoginText>소셜 계정으로 로그인</LoginText>
         <Wrapper>
           <OAuthImgWrapper>
-            <Image src={Github} alt="Github OAuth" />
-            <Image src={Naver} alt="Naver OAuth" />
+            <Image src={Github} onClick={onClick} alt="Github OAuth" />
+            <Image src={Naver} onClick={onClick} alt="Naver OAuth" />
           </OAuthImgWrapper>
           <WelcomeText>환영합니다 !</WelcomeText>
         </Wrapper>
