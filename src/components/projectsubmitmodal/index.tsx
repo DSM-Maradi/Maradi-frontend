@@ -1,8 +1,11 @@
 import { useState, useRef, useMemo } from "react";
 import styled from "styled-components";
 import { ImgUpload, XButton } from "../../assets/img";
+import projectCreate from "../../apis/project/create";
 
 interface PropsType {
+  title: string;
+  content: string;
   setModal: (modal: boolean) => void;
 }
 
@@ -12,15 +15,19 @@ interface UploadProps {
   type: string;
 }
 
-const ProjectSubmitModal = ({ setModal }: PropsType) => {
-  const [image, setImage] = useState<UploadProps | null>();
+const ProjectSubmitModal = ({ title, content, setModal }: PropsType) => {
+  const [image, setImage] = useState<UploadProps | null>(null);
   const [simpleIntroduce, setSimpleIntroduce] = useState<string>("");
   const RefValue = useRef<HTMLInputElement>(null);
+  const formData = new FormData();
   const onClick = () => {
     setModal(false);
   };
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
+    if (e.target.files) {
+      formData.append("imageFile", e.target.files[0]);
+    }
     if (fileList && fileList[0]) {
       const url = URL.createObjectURL(fileList[0]);
       setImage({
@@ -32,7 +39,6 @@ const ProjectSubmitModal = ({ setModal }: PropsType) => {
   };
   const showImage = useMemo(() => {
     if (!image && image === undefined) {
-      console.log("chekc");
       return (
         <>
           <UploadImg src={ImgUpload} alt="이미지 업로드 사진" />
@@ -42,18 +48,22 @@ const ProjectSubmitModal = ({ setModal }: PropsType) => {
     }
     return <Image src={image?.thumbnail} alt={image?.type} />;
   }, [image]);
+  const submitClick = () => {
+    if (image) {
+      projectCreate(title, content, image.thumbnail, simpleIntroduce);
+    }
+  };
   return (
     <ModalContainer onClick={onClick}>
       <ModalWrapper
         onClick={(e: React.MouseEvent<HTMLFormElement>) => e.stopPropagation()}
       >
         <XWrapper>
-          <XBtn src={XButton} onClick={onClick}></XBtn>
+          <XBtn src={XButton} onClick={() => setModal(false)}></XBtn>
         </XWrapper>
         <ImgBlock>
           <ImgUploadContainer htmlFor="input-file">
             {showImage}
-
             <FileSelector
               ref={RefValue}
               type="file"
@@ -72,7 +82,7 @@ const ProjectSubmitModal = ({ setModal }: PropsType) => {
           />
         </ImgBlock>
         <PostFormWrapper>
-          <PostForm onClick={() => setModal(false)}>
+          <PostForm onClick={submitClick}>
             <PostFormSpan>제출하기</PostFormSpan>
           </PostForm>
         </PostFormWrapper>
@@ -107,6 +117,9 @@ const PostForm = styled.div`
   border-radius: 5px;
   justify-content: center;
   cursor: pointer;
+  :hover {
+    background: ${({ theme }) => theme.color.darkmain};
+  }
 `;
 
 const PostFormSpan = styled.span`

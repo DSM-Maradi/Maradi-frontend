@@ -43,7 +43,7 @@ const CreateProject = () => {
   return (
     <>
       <MainContainer>
-        {modal && <ProjectSubmitModal setModal={setModal} />}
+        {modal && <ProjectSubmitModal title={title} setModal={setModal} content={content} />}
         <WriteContainer>
           <div>
             <WriteTitle
