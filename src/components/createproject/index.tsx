@@ -55,7 +55,7 @@ const CreateProject = () => {
           <InterfaceBar>
             <BackButton onClick={() => nav(-1)}>
               <img src={Arrow} alt="뒤로가기 화살표" />
-              <p>뒤로가기</p>
+              <BackBtnSpan>뒤로가기</BackBtnSpan>
             </BackButton>
             <ButtonWrapper>
               <Button>
@@ -109,15 +109,20 @@ const BackButton = styled.div`
   width: max-content;
   height: 48px;
   border-radius: 10px;
-  padding: 10px 30px;
+  padding: 10px 30px 10px 20px;
   margin-left: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   cursor: pointer;
   :hover {
     background: ${({ theme }) => theme.color.gray500};
   }
+`;
+
+const BackBtnSpan = styled.span`
+  margin-top: 2px;
+  margin-left: 5px;
 `;
 
 const MainContainer = styled.div`

@@ -62,11 +62,10 @@ const WithdrawalButton = styled.button`
   background: none;
   color: ${({ theme }) => theme.color.error};
   cursor: pointer;
-  :hover{
-    background: ${({theme}) => theme.color.error};
-    color: ${({theme}) => theme.color.white};
+  :hover {
+    background: ${({ theme }) => theme.color.error};
+    color: ${({ theme }) => theme.color.white};
   }
-
 `;
 
 const Input = styled.input`
