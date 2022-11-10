@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Header from "../common/header";
+import React, { useState } from "react";
 import {
   RoundProfileImg,
   CommentImg,
@@ -29,6 +30,40 @@ function SeeProject() {
         "에휴 이준서 병신 이따구로 글 쓰면 누가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어 너같은 새끼들때문에 세상이 망하는거임 에휴 이준서 병신 이따구로 글 쓰면 누 가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어너같은 새끼들때문에 세상이 망하는거임",
     },
   ];
+  const [change, setChange] = useState({
+    click: false,
+    money: 0,
+  });
+  const { click, money } = change;
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const money = Number(e.target.value);
+    setChange({
+      click: click,
+      money: money,
+    });
+  };
+
+  const onFunding = () => {
+    setChange({
+      click: !click,
+      money: money,
+    });
+    if (click === true && money !== 0) {
+      alert(`${money}원을 후원을 진행하시겠습니까?`);
+      setChange({
+        click: !click,
+        money: 0,
+      });
+
+      console.log(money);
+    } else if (click === true && money == 0) {
+      setChange({
+        click: !click,
+        money: 0,
+      });
+    }
+  };
+
   return (
     <>
       <Header />
@@ -125,7 +160,18 @@ function SeeProject() {
             <img src={RoundProfileImg} alt="프로필" />
             <NameAndBtn>
               <UserName>조상현 닮은 앵무새</UserName>
-              <FundingBtn>펀딩하기</FundingBtn>
+              {click === false ? (
+                <FundingBtn onClick={onFunding}>펀딩하기</FundingBtn>
+              ) : (
+                <FundingInputContainer>
+                  <FundingInput
+                    onChange={onChange}
+                    type="number"
+                    placeholder="얼마를 펀딩하시겠어요?"
+                  />
+                  <FundingBtn2 onClick={onFunding}>펀딩하기</FundingBtn2>
+                </FundingInputContainer>
+              )}
             </NameAndBtn>
           </FundingProfileContainer>
         </MainContainer>
@@ -266,14 +312,48 @@ const FundingBtn = styled.button`
   font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
-  &:active {
-    color: ${({ theme }) => theme.color.main};
-  }
-  :hover {
+  &:hover {
     color: ${({ theme }) => theme.color.main};
     background: ${({ theme }) => theme.color.white};
     border: 1px solid ${({ theme }) => theme.color.main};
+
+    &:active {
+      color: ${({ theme }) => theme.color.white};
+      background: ${({ theme }) => theme.color.main};
+    }
   }
+`;
+
+const FundingBtn2 = styled.button`
+  width: 105px;
+  height: 49px;
+  border: solid ${({ theme }) => theme.color.error};
+  color: ${({ theme }) => theme.color.error};
+  background-color: ${({ theme }) => theme.color.white};
+  border-radius: 8px;
+  &:hover {
+    background-color: ${({ theme }) => theme.color.error};
+    color: ${({ theme }) => theme.color.white};
+  }
+  &:active {
+    color: ${({ theme }) => theme.color.error};
+    background-color: ${({ theme }) => theme.color.white};
+  }
+`;
+
+const FundingInputContainer = styled.div`
+  width: 523px;
+  height: 49px;
+  display: flex;
+  gap: 10px;
+`;
+
+const FundingInput = styled.input`
+  width: 408px;
+  height: 100%;
+  border: solid black;
+  border-radius: 8px;
+  padding-left: 23px;
 `;
 
 const PostCommentContainer = styled.form`
