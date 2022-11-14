@@ -5,20 +5,23 @@ import CreateProject from "./components/createproject";
 import MyPage from "./components/mypage";
 import SeeProject from "./components/seeproject";
 import Hall from "./components/hall";
+import { RecoilRoot } from "recoil";
 
 const App = () => {
   return (
-    <StyleProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/createProject" element={<CreateProject />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/seeProject" element={<SeeProject />} />
-          <Route path="/hall" element={<Hall />} />
-        </Routes>
-      </BrowserRouter>
-    </StyleProvider>
+    <RecoilRoot>
+      <StyleProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/createProject" element={<CreateProject />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/seeProject" element={<SeeProject />} />
+            <Route path="/hall" element={<Hall />} />
+          </Routes>
+        </BrowserRouter>
+      </StyleProvider>
+    </RecoilRoot>
   );
 };
 
