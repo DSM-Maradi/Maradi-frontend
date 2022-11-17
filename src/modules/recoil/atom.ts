@@ -5,6 +5,6 @@ export const user = atom({
   default: {
     name: "",
     profile: "",
-    
+    email: "",
   },
 });
