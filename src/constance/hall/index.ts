@@ -20,4 +20,39 @@ export const DummyData: DummyType[] = [
     name: "황진성",
     amount: 1000,
   },
+  {
+    id: 4,
+    name: "황진성",
+    amount: 1000,
+  },
+  {
+    id: 5,
+    name: "황진성",
+    amount: 1000,
+  },
+  {
+    id: 6,
+    name: "황진성",
+    amount: 1000,
+  },
+  {
+    id: 7,
+    name: "황진성",
+    amount: 1000,
+  },
+  {
+    id: 8,
+    name: "황진성",
+    amount: 1000,
+  },
+  {
+    id: 9,
+    name: "황진성",
+    amount: 1000,
+  },
+  {
+    id: 10,
+    name: "황진성",
+    amount: 1000,
+  },
 ];
