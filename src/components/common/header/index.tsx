@@ -14,10 +14,15 @@ const Header = () => {
     } else {
       setTimeout(() => (document.body.style.overflow = "unset"), 1000);
     }
-    if(localStorage.getItem("access_token") && localStorage.getItem("refresh_token")){
+    if (
+      localStorage.getItem("access_token") &&
+      localStorage.getItem("refresh_token")
+    ) {
       setLogin(true);
     }
   }, [modal]);
+  // const response = github();
+  // console.log(response);
   return (
     <>
       <HeaderContainer>
