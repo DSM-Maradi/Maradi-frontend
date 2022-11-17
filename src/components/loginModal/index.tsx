@@ -12,7 +12,7 @@ interface ModalProps {
 
 const LoginModal = ({ setModal }: PropsType) => {
   const [modalVisible, setModalVisible] = useState<boolean>(true);
-  const ClickModal = (e: React.MouseEvent<HTMLDivElement>) => {
+  const ClickModal = () => {
     if (modalVisible) {
       setModalVisible(false);
       setTimeout(() => {
@@ -20,7 +20,10 @@ const LoginModal = ({ setModal }: PropsType) => {
       }, 600);
     }
   };
-
+  const onClickGithub = () => {
+    window.location.href =
+      "https://github.com/login/oauth/authorize?client_id=02493973837df250bb9d&scope=user";
+  };
   return (
     <ModalBackground modalVisible={modalVisible} onClick={ClickModal}>
       <ModalWrapper
@@ -42,7 +45,7 @@ const LoginModal = ({ setModal }: PropsType) => {
         <LoginText>소셜 계정으로 로그인</LoginText>
         <Wrapper>
           <OAuthImgWrapper>
-            <Image src={Github} alt="Github OAuth" />
+            <Image src={Github} onClick={onClickGithub} alt="Github OAuth" />
             <Image src={Naver} alt="Naver OAuth" />
           </OAuthImgWrapper>
           <WelcomeText>환영합니다 !</WelcomeText>

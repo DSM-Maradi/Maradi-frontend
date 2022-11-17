@@ -7,7 +7,7 @@ import NameList from "./nameList";
 
 const Header = () => {
   const [modal, setModal] = useState<boolean>(false);
-  const [login, setLogin] = useState<boolean>(true);
+  const [login, setLogin] = useState<boolean>(false);
   useEffect(() => {
     if (modal) {
       document.body.style.overflow = "hidden";
