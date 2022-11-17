@@ -1,13 +1,13 @@
-import instance from "../axios";
+import axios from "axios";
 
-export default function auth(
-  access_token: string | null
-  //   refresh_token: string | null
-) {
-  const response = instance.post("/auth/oauth");
-  if (access_token) {
-    localStorage.setItem("access_token", access_token);
-    // localStorage.setItem("refresh_token", refresh_token);
-  }
+export interface AxiosType {
+  client_id: string;
+}
+
+export default async function auth(code: string) {
+  const response = await axios
+    .get(`http://43.201.106.115:8080/auth/login/github?code=${code}`)
+    .then((res) => res.data)
+    .catch((err) => console.error(err));
   return response;
 }

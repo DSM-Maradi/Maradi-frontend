@@ -3,8 +3,19 @@ import styled from "styled-components";
 import { MainImg, SearchFont, ListImg, SortArrow } from "../../assets/img";
 import { ProjectList } from "../../constance/projectlist";
 import { Link } from "react-router-dom";
+import auth from "../../apis/auth/auth";
+import { useEffect } from "react";
 
 const Main = () => {
+  const urlParam = new URL(window.location.href).searchParams.get("code");
+  useEffect(() => {
+    if (urlParam) {
+      auth(urlParam).then((res) => {
+        localStorage.setItem("access_token", res.access_token);
+        localStorage.setItem("refresh_token", res.refresh_token);
+      });
+    }
+  }, []);
   return (
     <>
       <Header />
@@ -68,7 +79,7 @@ const ListBlock = styled(Link)`
 
 const MainImgContainer = styled.div`
   width: 100%;
-  height: 800px;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;

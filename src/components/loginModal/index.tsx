@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { ModalBackgroundImg, Github, XButton, Naver } from "../../assets/img";
 import { useState } from "react";
-import auth from "../../apis/auth/auth";
-import qs from "qs";
 
 interface PropsType {
   setModal: (modal: boolean) => void;
@@ -13,10 +11,8 @@ interface ModalProps {
 }
 
 const LoginModal = ({ setModal }: PropsType) => {
-  const github = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}`;
   const [modalVisible, setModalVisible] = useState<boolean>(true);
-  
-  const ClickModal = (e: React.MouseEvent<HTMLDivElement>) => {
+  const ClickModal = () => {
     if (modalVisible) {
       setModalVisible(false);
       setTimeout(() => {
@@ -25,11 +21,9 @@ const LoginModal = ({ setModal }: PropsType) => {
     }
   };
   const onClickGithub = () => {
-    window.location.assign(github);
-    console.log(1);
-    auth("t");
+    window.location.href =
+      "https://github.com/login/oauth/authorize?client_id=02493973837df250bb9d&scope=user";
   };
-  const onClickNaver = () => {};
   return (
     <ModalBackground modalVisible={modalVisible} onClick={ClickModal}>
       <ModalWrapper
@@ -52,7 +46,7 @@ const LoginModal = ({ setModal }: PropsType) => {
         <Wrapper>
           <OAuthImgWrapper>
             <Image src={Github} onClick={onClickGithub} alt="Github OAuth" />
-            <Image src={Naver} onClick={onClickNaver} alt="Naver OAuth" />
+            <Image src={Naver} alt="Naver OAuth" />
           </OAuthImgWrapper>
           <WelcomeText>환영합니다 !</WelcomeText>
         </Wrapper>
