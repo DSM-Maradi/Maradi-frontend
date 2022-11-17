@@ -7,6 +7,11 @@ interface PropsType {
 
 const NameList = ({ setLogin }: PropsType) => {
   const goToTop = () => window.scrollTo(0, 0);
+  const LogoutOnClick = () => {
+    setLogin(false);
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+  };
   return (
     <ListWrapper>
       <Wrapper onClick={goToTop} to="/mypage">
@@ -20,7 +25,7 @@ const NameList = ({ setLogin }: PropsType) => {
         </Items>
       </Wrapper>
       <Wrapper to="">
-        <Items onClick={() => setLogin(false)}>
+        <Items onClick={LogoutOnClick}>
           <span>로그아웃</span>
         </Items>
       </Wrapper>
