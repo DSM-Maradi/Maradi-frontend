@@ -4,7 +4,8 @@ import styled from "styled-components";
 import { DummyData } from "../../constance/hall";
 
 interface StyledProps {
-  idx: number;
+  idx?: number;
+  font: number;
 }
 
 const Hall = () => {
@@ -14,20 +15,32 @@ const Hall = () => {
       <HallWrapper>
         <Title>명예의 전당</Title>
         <RankWrapper>
-          {DummyData.map((e) => (
-            <RankContainer key={e.id} idx={e.id}>
-              <RankProfileImg>
-                <RankText>{e.id}등</RankText>
-                <Name>{e.name}</Name>
-                <FundAmount>{e.amount}원</FundAmount>
-              </RankProfileImg>
-            </RankContainer>
-          ))}
+          <PlayerName font={6}>김범진</PlayerName>
+          <PlayerName font={6}>김범진</PlayerName>
+          <PlayerName font={6}>김범진</PlayerName>
+          <PlayerName font={6}>김범진</PlayerName>
+          <PlayerName font={6}>김범진</PlayerName>
+          <PlayerName font={6}>김범진</PlayerName>
+          <PlayerName font={6}>김범진</PlayerName>
+          <PlayerName font={6}>김범진</PlayerName>
+          <PlayerName font={6}>김범진</PlayerName>
+          <PlayerName font={6}>김범진</PlayerName>
         </RankWrapper>
       </HallWrapper>
     </Wrapper>
   );
 };
+
+const PlayerName = styled.span<StyledProps>`
+  width: 1000px;
+  font-size: ${({ font }) => `${font * 10}px`};
+  color: ${({ theme }) => theme.color.white};
+  font-family: ${({ theme }) => theme.font.inter};
+  font-weight: 700;
+  line-height: 73px;
+  text-align: center;
+  border-bottom: 2px solid ${({ theme }) => theme.color.white};
+`;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -57,8 +70,12 @@ const Title = styled.span`
 
 const RankWrapper = styled.div`
   width: 1468px;
-  height: 785px;
+  height: 1080px;
   background-image: url(${HallBackground});
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 const RankContainer = styled.div<StyledProps>`
