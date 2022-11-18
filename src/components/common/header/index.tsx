@@ -21,8 +21,6 @@ const Header = () => {
       setLogin(true);
     }
   }, [modal]);
-  // const response = github();
-  // console.log(response);
   return (
     <>
       <HeaderContainer>
