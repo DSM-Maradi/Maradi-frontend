@@ -1,4 +1,4 @@
-const theme = {
+export const theme = {
   color: {
     mainblack: "#343434",
     error: "#E03131",
@@ -23,5 +23,3 @@ const theme = {
     inter: "Inter",
   },
 } as const;
-
-export default theme;

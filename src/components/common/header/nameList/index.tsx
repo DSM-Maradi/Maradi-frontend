@@ -22,6 +22,11 @@ const NameList = ({ setLogin }: PropsType) => {
       </Wrapper>
       <Wrapper to="">
         <Items onClick={LogoutOnClick}>
+          <span></span>
+        </Items>
+      </Wrapper>
+      <Wrapper to="">
+        <Items onClick={LogoutOnClick}>
           <span>로그아웃</span>
         </Items>
       </Wrapper>
@@ -55,7 +60,7 @@ const Items = styled.div`
   align-items: center;
   z-index: 3;
   :hover {
-    background: ${({ theme }) => theme.color.gray700};
+    background: ${({ theme }) => theme.color.gray300};
   }
 `;
 

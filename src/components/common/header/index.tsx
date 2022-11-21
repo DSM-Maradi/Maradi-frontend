@@ -33,9 +33,7 @@ const Header = () => {
           <ItemLink to="/createProject">프로젝트 생성</ItemLink>
           {!login ? (
             <Text onClick={() => setModal(true)}>
-              <ItemLink to="">로그인</ItemLink>
-              <span>/</span>
-              <ItemLink to="">회원가입</ItemLink>
+              <ItemLink to="">로그인/회원가입</ItemLink>
             </Text>
           ) : (
             <>
@@ -63,7 +61,7 @@ const ProfileWrapper = styled.summary`
 const Profile = styled.img`
   width: 40px;
   height: 40px;
-  margin-right: 10px;
+  margin-right: 15px;
   cursor: pointer;
 `;
 
@@ -84,7 +82,7 @@ const NameText = styled.span`
 
 const HeaderContainer = styled.header`
   width: 100%;
-  height: 50px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-around;
