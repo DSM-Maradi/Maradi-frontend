@@ -1,11 +1,19 @@
 import Header from "../common/header";
 import styled from "styled-components";
-import { ProjectList } from "../../constance/projectlist";
 import ProjectCard from "./projectcard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { myProject, myProjectResType } from "../../apis/project/My";
 
 const MyPage = () => {
   const [checked, setChecked] = useState<number>(-1);
+  const [projectList, setProjectList] = useState<null | myProjectResType>(null);
+  useEffect(() => {
+    myProject()
+      .then((res) => {
+        setProjectList(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <Wrapper>
       <Header />
@@ -31,19 +39,37 @@ const MyPage = () => {
       <ProjectWrapper>
         <Text>나의 프로젝트</Text>
         <ListWrapper>
-          {ProjectList.map((e) => (
-            <ProjectCard
-              key={e.id}
-              index={e.id}
-              title={e.title}
-              text={e.text}
-              date={e.date}
-              goalMoney={e.goalMoney}
-              nowMoney={e.nowMoney}
-              checked={checked}
-              setChecked={setChecked}
-            />
-          ))}
+          {projectList &&
+            projectList.my_project.map((project) => (
+              <ProjectCard
+                id={project.id}
+                name={project.name}
+                content={project.content}
+                date={project.date}
+                target_funding_amount={project.target_funding_amount}
+                funding_amount={project.funding_amount}
+                setChecked={setChecked}
+                checked={checked}
+              />
+            ))}
+        </ListWrapper>
+      </ProjectWrapper>
+      <ProjectWrapper>
+        <Text>좋아요 누른 프로젝트</Text>
+        <ListWrapper>
+          {projectList &&
+            projectList.liked_project.map((project) => (
+              <ProjectCard
+                id={project.id}
+                name={project.name}
+                content={project.content}
+                date={project.date}
+                target_funding_amount={project.target_funding_amount}
+                funding_amount={project.funding_amount}
+                setChecked={setChecked}
+                checked={checked}
+              />
+            ))}
         </ListWrapper>
       </ProjectWrapper>
     </Wrapper>
@@ -152,6 +178,7 @@ const ProjectWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 50px;
 `;
 
 const Text = styled.span`

@@ -30,7 +30,7 @@ const Header = () => {
         </HeaderLogo>
         <HeaderItems>
           <ItemLink to="/hall">명예의 전당</ItemLink>
-          <ItemLink to="/createProject">프로젝트</ItemLink>
+          <ItemLink to="/createProject">프로젝트 생성</ItemLink>
           {!login ? (
             <Text onClick={() => setModal(true)}>
               <ItemLink to="">로그인</ItemLink>

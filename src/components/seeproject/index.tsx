@@ -1,41 +1,28 @@
 import styled from "styled-components";
 import Header from "../common/header";
-import React, { useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import {
   RoundProfileImg,
   CommentImg,
   Like,
   Share,
   ThreeDot,
+  noLike,
 } from "../../assets/img";
+import { useParams } from "react-router-dom";
+import { detailResponseType, projectDetail } from "../../apis/project/Detail";
+import { createProject } from "../../apis/comment/Create";
+import { patchLike } from "../../apis/Like";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 function SeeProject() {
-  const dummyData: { id: number; name: string; value: string }[] = [
-    {
-      id: 1,
-      name: "조상현",
-      value:
-        "에휴 이준서 병신 이따구로 글 쓰면 누가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어 너같은 새끼들때문에 세상이 망하는거임 에휴 이준서 병신 이따구로 글 쓰면 누 가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어너같은 새끼들때문에 세상이 망하는거임",
-    },
-    {
-      id: 2,
-      name: "조상현",
-      value:
-        "에휴 이준서 병신 이따구로 글 쓰면 누가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어 너같은 새끼들때문에 세상이 망하는거임 에휴 이준서 병신 이따구로 글 쓰면 누 가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어너같은 새끼들때문에 세상이 망하는거임",
-    },
-    {
-      id: 3,
-      name: "조상현",
-      value:
-        "에휴 이준서 병신 이따구로 글 쓰면 누가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어 너같은 새끼들때문에 세상이 망하는거임 에휴 이준서 병신 이따구로 글 쓰면 누 가 읽어줄 주 아나 ㅉㅉ 그냥 죽어라 죽어너같은 새끼들때문에 세상이 망하는거임",
-    },
-  ];
   const [change, setChange] = useState({
     click: false,
     money: 0,
   });
+  const [commentState, setCommentState] = useState("");
   const { click, money } = change;
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const money = Number(e.target.value);
     setChange({
       click: click,
@@ -57,144 +44,91 @@ function SeeProject() {
     }
   };
 
+  const { id } = useParams();
+
+  const [detail, setDetail] = useState<detailResponseType | null>(null);
+  useEffect(() => {
+    if (id) projectDetail(id).then((res) => setDetail(res));
+  }, [id, detail]);
+
   return (
     <>
       <Header />
-      <Wrapper>
-        <MainContainer>
-          <ProjectTitle>이태원에서 일어난 끔찍한 사건</ProjectTitle>
-          <Line1 />
-          <SideBar>
-            <LikeImg>
-              <img src={Like} alt="좋아요" />
-              <LikeNum>10</LikeNum>
-            </LikeImg>
-            <SideBarHr />
-            <ShareImg src={Share} alt="공유 이미지" />
-          </SideBar>
-          <ProjectContents>
-            윤희근 경찰청장은 “사고가 발생하기 직전 현장의 심각성을 알리는 112
-            신고가 다수 있었지만 현장의 대응은 미흡했다”며 경찰청에 독립적인
-            특별기구를 꾸려 현장 대응이 적절했는지 조사하겠다고 밝혔다. 윤
-            청장은 1일 서울 서대문구 경찰청에서 ‘이태원 사고 관련 경찰청장
-            브리핑’을 열어 “사고가 발생하기 직전에 현장의 심각성을 알리는 112
-            신고가 다수 있었던 것을 확인했다. 신고 내용을 보면 사고 발 생
-            이전부터 많은 군중이 몰려 사고의 위험성을 알리는 급박한 내용”이라며
-            “그럼에도 불구하고 112신고를 처리하는 현장의 대응은 미흡했다는
-            판단을 했다”고 말했다. 또한 “경찰은 이번 사건의 진상을 명확히 밝히고
-            책임을 규명하기 위해 모든 부분에 대해 예외없이 강도 높은 감찰과
-            수사를 신속하고 엄밀하게 진행하겠다”며 “오늘부터 경찰청에 독립적인
-            특별기구를 설치해 투명하고 엄정하게 사안의 진상을 밝히겠다”고 했다.
-            또 재발방지 대책 마련에도 나서겠다고 강조했다. 윤 청장은 “향후
-            범정부 차원의 재발방지 대책 논의에도 적극 참여해 다시는 이러한
-            사고가 반복되지 않도록 경찰의 역할과 책임을 다하겠다”고 말했다.
-            윤희근 경찰청장은 “사고가 발생하기 직전 현장의 심각성을 알리는 112
-            신고가 다수 있었지만 현장의 대응은 미흡했다”며 경찰청에 독립적인
-            특별기구를 꾸려 현장 대응이 적절했는지 조사하겠다고 밝혔다. 윤
-            청장은 1일 서울 서대문구 경찰청에서 ‘이태원 사고 관련 경찰청장
-            브리핑’을 열어 “사고가 발생하기 직전에 현장의 심각성을 알리는 112
-            신고가 다수 있었던 것을 확인했다. 신고 내용을 보면 사고 발 생
-            이전부터 많은 군중이 몰려 사고의 위험성을 알리는 급박한 내용”이라며
-            “그럼에도 불구하고 112신고를 처리하는 현장의 대응은 미흡했다는
-            판단을 했다”고 말했다. 또한 “경찰은 이번 사건의 진상을 명확히 밝히고
-            책임을 규명하기 위해 모든 부분에 대해 예외없이 강도 높은 감찰과
-            수사를 신속하고 엄밀하게 진행하겠다”며 “오늘부터 경찰청에 독립적인
-            특별기구를 설치해 투명하고 엄정하게 사안의 진상을 밝히겠다”고 했다.
-            또 재발방지 대책 마련에도 나서겠다고 강조했다. 윤 청장은 “향후
-            범정부 차원의 재발방지 대책 논의에도 적극 참여해 다시는 이러한
-            사고가 반복되지 않도록 경찰의 역할과 책임을 다하겠다”고 말했다.
-            윤희근 경찰청장은 “사고가 발생하기 직전 현장의 심각성을 알리는 112
-            신고가 다수 있었지만 현장의 대응은 미흡했다”며 경찰청에 독립적인
-            특별기구를 꾸려 현장 대응이 적절했는지 조사하겠다고 밝혔다. 윤
-            청장은 1일 서울 서대문구 경찰청에서 ‘이태원 사고 관련 경찰청장
-            브리핑’을 열어 “사고가 발생하기 직전에 현장의 심각성을 알리는 112
-            신고가 다수 있었던 것을 확인했다. 신고 내용을 보면 사고 발 생
-            이전부터 많은 군중이 몰려 사고의 위험성을 알리는 급박한 내용”이라며
-            “그럼에도 불구하고 112신고를 처리하는 현장의 대응은 미흡했다는
-            판단을 했다”고 말했다. 또한 “경찰은 이번 사건의 진상을 명확히 밝히고
-            책임을 규명하기 위해 모든 부분에 대해 예외없이 강도 높은 감찰과
-            수사를 신속하고 엄밀하게 진행하겠다”며 “오늘부터 경찰청에 독립적인
-            특별기구를 설치해 투명하고 엄정하게 사안의 진상을 밝히겠다”고 했다.
-            또 재발방지 대책 마련에도 나서겠다고 강조했다. 윤 청장은 “향후
-            범정부 차원의 재발방지 대책 논의에도 적극 참여해 다시는 이러한
-            사고가 반복되지 않도록 경찰의 역할과 책임을 다하겠다”고 말했다.
-            윤희근 경찰청장은 “사고가 발생하기 직전 현장의 심각성을 알리는 112
-            신고가 다수 있었지만 현장의 대응은 미흡했다”며 경찰청에 독립적인
-            특별기구를 꾸려 현장 대응이 적절했는지 조사하겠다고 밝혔다. 윤
-            청장은 1일 서울 서대문구 경찰청에서 ‘이태원 사고 관련 경찰청장
-            브리핑’을 열어 “사고가 발생하기 직전에 현장의 심각성을 알리는 112
-            신고가 다수 있었던 것을 확인했다. 신고 내용을 보면 사고 발 생
-            이전부터 많은 군중이 몰려 사고의 위험성을 알리는 급박한 내용”이라며
-            “그럼에도 불구하고 112신고를 처리하는 현장의 대응은 미흡했다는
-            판단을 했다”고 말했다. 또한 “경찰은 이번 사건의 진상을 명확히 밝히고
-            책임을 규명하기 위해 모든 부분에 대해 예외없이 강도 높은 감찰과
-            수사를 신속하고 엄밀하게 진행하겠다”며 “오늘부터 경찰청에 독립적인
-            특별기구를 설치해 투명하고 엄정하게 사안의 진상을 밝히겠다”고 했다.
-            또 재발방지 대책 마련에도 나서겠다고 강조했다. 윤 청장은 “향후
-            범정부 차원의 재발방지 대책 논의에도 적극 참여해 다시는 이러한
-            사고가 반복되지 않도록 경찰의 역할과 책임을 다하겠다”고 말했다.
-            윤희근 경찰청장은 “사고가 발생하기 직전 현장의 심각성을 알리는 112
-            신고가 다수 있었지만 현장의 대응은 미흡했다”며 경찰청에 독립적인
-            특별기구를 꾸려 현장 대응이 적절했는지 조사하겠다고 밝혔다. 윤
-            청장은 1일 서울 서대문구 경찰청에서 ‘이태원 사고 관련 경찰청장
-            브리핑’을 열어 “사고가 발생하기 직전에 현장의 심각성을 알리는 112
-            신고가 다수 있었던 것을 확인했다. 신고 내용을 보면 사고 발 생
-            이전부터 많은 군중이 몰려 사고의 위험성을 알리는 급박한 내용”이라며
-            “그럼에도 불구하고 112신고를 처리하는 현장의 대응은 미흡했다는
-            판단을 했다”고 말했다. 또한 “경찰은 이번 사건의 진상을 명확히 밝히고
-            책임을 규명하기 위해 모든 부분에 대해 예외없이 강도 높은 감찰과
-            수사를 신속하고 엄밀하게 진행하겠다”며 “오늘부터 경찰청에 독립적인
-            특별기구를 설치해 투명하고 엄정하게 사안의 진상을 밝히겠다”고 했다.
-            또 재발방지 대책 마련에도 나서겠다고 강조했다. 윤 청장은 “향후
-            범정부 차원의 재발방지 대책 논의에도 적극 참여해 다시는 이러한
-            사고가 반복되지 않도록 경찰의 역할과 책임을 다하겠다”고 말했다.
-          </ProjectContents>
-          <FundingProfileContainer>
-            <img src={RoundProfileImg} alt="프로필" />
-            <NameAndBtn>
-              <UserName>조상현 닮은 앵무새</UserName>
-              {click === false ? (
-                <FundingBtn onClick={onFunding}>펀딩하기</FundingBtn>
-              ) : (
-                <FundingInputContainer>
-                  <FundingInput
-                    onChange={onChange}
-                    type="number"
-                    placeholder="얼마를 펀딩하시겠어요?"
-                  />
-                  <FundingBtn2 onClick={onFunding}>펀딩하기</FundingBtn2>
-                </FundingInputContainer>
-              )}
-            </NameAndBtn>
-          </FundingProfileContainer>
-        </MainContainer>
-        <Line2 />
-        <PostCommentContainer>
-          <PostCommentInput placeholder="프로젝트에 대한 여러 평가들을 작성해주세요." />
-          <CommentSubmitBtn>
-            <img src={CommentImg} alt="댓글 이미지" />
-            댓글작성
-          </CommentSubmitBtn>
-        </PostCommentContainer>
-        <CommentItemContainer>
-          {dummyData.map((v, i) => (
-            <CommentWrapper key={i}>
-              <ImgWrapper>
-                <details>
-                  <SummaryWrapper>
-                    <ThreeDotImage src={ThreeDot} />
-                  </SummaryWrapper>
-                  <DeleteButton>댓글 삭제하기</DeleteButton>
-                </details>
-              </ImgWrapper>
-              <CommentItem>
-                <CommentUserName>{v.name}</CommentUserName>
-                <CommentContents>{v.value}</CommentContents>
-              </CommentItem>
-            </CommentWrapper>
-          ))}
-        </CommentItemContainer>
-      </Wrapper>
+      {detail && (
+        <Wrapper>
+          <MainContainer>
+            <ProjectTitle>{detail.title}</ProjectTitle>
+            <Line1 />
+            <SideBar>
+              <LikeImg>
+                <img
+                  onClick={() => patchLike(id)}
+                  src={detail.is_liked ? noLike : Like}
+                  alt="좋아요"
+                />
+                <LikeNum>{detail.like_count}</LikeNum>
+              </LikeImg>
+              <SideBarHr />
+              <CopyToClipboard
+                text={`http://localhost:3000/project/${id}`}
+                onCopy={() => {
+                  alert("복사완료");
+                }}
+              >
+                <ShareImg src={Share} alt="공유 이미지" />
+              </CopyToClipboard>
+            </SideBar>
+            <ProjectContents>{detail.content}</ProjectContents>
+            <FundingProfileContainer>
+              <img src={RoundProfileImg} alt="프로필" />
+              <NameAndBtn>
+                <UserName>{detail.name}</UserName>
+                {click === false ? (
+                  <FundingBtn onClick={onFunding}>펀딩하기</FundingBtn>
+                ) : (
+                  <FundingInputContainer>
+                    <FundingInput
+                      onChange={onChange}
+                      type="number"
+                      placeholder="얼마를 펀딩하시겠어요?"
+                    />
+                    <FundingBtn2 onClick={onFunding}>펀딩하기</FundingBtn2>
+                  </FundingInputContainer>
+                )}
+              </NameAndBtn>
+            </FundingProfileContainer>
+          </MainContainer>
+          <Line2 />
+          <PostCommentContainer>
+            <PostCommentInput
+              onChange={({ target }) => setCommentState(target.value)}
+              placeholder="프로젝트에 대한 여러 평가들을 작성해주세요."
+            />
+            <CommentSubmitBtn onClick={() => createProject(commentState, id)}>
+              <img src={CommentImg} alt="댓글 이미지" />
+              댓글작성
+            </CommentSubmitBtn>
+          </PostCommentContainer>
+          <CommentItemContainer>
+            {detail.comment.map((v, i) => (
+              <CommentWrapper key={i}>
+                <ImgWrapper>
+                  <details>
+                    <SummaryWrapper>
+                      <ThreeDotImage src={ThreeDot} />
+                    </SummaryWrapper>
+                    <DeleteButton>댓글 삭제하기</DeleteButton>
+                  </details>
+                </ImgWrapper>
+                <CommentItem>
+                  <CommentUserName>{v.name}</CommentUserName>
+                  <CommentContents>{v.content}</CommentContents>
+                </CommentItem>
+              </CommentWrapper>
+            ))}
+          </CommentItemContainer>
+        </Wrapper>
+      )}
     </>
   );
 }
@@ -388,7 +322,6 @@ const CommentSubmitBtn = styled.form`
 
 const CommentItemContainer = styled.div`
   width: 600px;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   margin-top: 20px;

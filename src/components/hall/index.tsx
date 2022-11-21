@@ -1,7 +1,8 @@
 import { HallBackground, ProfileImg } from "../../assets/img";
 import Header from "../common/header";
 import styled from "styled-components";
-import { DummyData } from "../../constance/hall";
+import { useEffect, useState } from "react";
+import { HallOfFame, UsersType } from "../../apis/HallOfFame";
 
 interface StyledProps {
   idx?: number;
@@ -9,22 +10,21 @@ interface StyledProps {
 }
 
 const Hall = () => {
+  const [hallOfList, setHallOfList] = useState<UsersType[]>([]);
+  useEffect(() => {
+    HallOfFame().then((res) => {
+      setHallOfList(res.users);
+    });
+  }, []);
   return (
     <Wrapper>
       <Header />
       <HallWrapper>
         <Title>명예의 전당</Title>
         <RankWrapper>
-          <PlayerName font={6}>김범진</PlayerName>
-          <PlayerName font={6}>김범진</PlayerName>
-          <PlayerName font={6}>김범진</PlayerName>
-          <PlayerName font={6}>김범진</PlayerName>
-          <PlayerName font={6}>김범진</PlayerName>
-          <PlayerName font={6}>김범진</PlayerName>
-          <PlayerName font={6}>김범진</PlayerName>
-          <PlayerName font={6}>김범진</PlayerName>
-          <PlayerName font={6}>김범진</PlayerName>
-          <PlayerName font={6}>김범진</PlayerName>
+          {hallOfList.map((hall) => (
+            <PlayerName font={6}>{hall.name}</PlayerName>
+          ))}
         </RankWrapper>
       </HallWrapper>
     </Wrapper>

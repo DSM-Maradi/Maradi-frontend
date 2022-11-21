@@ -20,11 +20,6 @@ const NameList = ({ setLogin }: PropsType) => {
           <span>마이페이지</span>
         </Items>
       </Wrapper>
-      <Wrapper onClick={goToTop} to="/createProject">
-        <Items>
-          <span>프로젝트 생성</span>
-        </Items>
-      </Wrapper>
       <Wrapper to="">
         <Items onClick={LogoutOnClick}>
           <span>로그아웃</span>
@@ -36,7 +31,7 @@ const NameList = ({ setLogin }: PropsType) => {
 
 const ListWrapper = styled.div`
   width: 200px;
-  height: 135px;
+  height: 100px;
   display: flex;
   flex-direction: column;
   position: absolute;

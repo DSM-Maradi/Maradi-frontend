@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { Arrow } from "../../assets/img";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import ProjectSubmitModal from "../projectsubmitmodal";
 import { useNavigate } from "react-router-dom";
 
-interface InputType {
+export interface InputType {
   title: string;
   content: string;
 }
@@ -17,9 +17,7 @@ const CreateProject = () => {
   });
   const [modal, setModal] = useState<boolean>(false);
   const { title, content }: InputType = input;
-  const onChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value, name } = e.target;
     setInputs({
       ...input,
@@ -36,7 +34,7 @@ const CreateProject = () => {
   return (
     <>
       <MainContainer>
-        {modal && <ProjectSubmitModal setModal={setModal} />}
+        {modal && <ProjectSubmitModal input={input} setModal={setModal} />}
         <WriteContainer>
           <div>
             <WriteTitle

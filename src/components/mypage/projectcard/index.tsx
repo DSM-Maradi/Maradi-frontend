@@ -1,41 +1,37 @@
 import styled from "styled-components";
 import { ThreeDot, ListImg } from "../../../assets/img";
 import { Link } from "react-router-dom";
+import { projectType } from "../../../apis/project/My";
+import { Dispatch, SetStateAction } from "react";
 
-interface PropsType {
-  index: number;
-  title: string;
-  text: string;
-  date: string;
-  goalMoney: number;
-  nowMoney: number;
+interface PropsType extends projectType {
   checked: number;
-  setChecked: (checked: number) => void;
+  setChecked: Dispatch<SetStateAction<number>>;
 }
 
 const ProjectCard = ({
-  index,
-  title,
-  text,
+  id,
+  name,
+  content,
   date,
-  goalMoney,
-  nowMoney,
-  checked,
+  target_funding_amount,
+  funding_amount,
   setChecked,
+  checked,
 }: PropsType) => {
   return (
-    <>
-      <ListItems checked={checked} index={index}>
+    <Link to={`/project/${id}`}>
+      <ListItems key={id} checked={checked} index={id}>
         <ImgWrapper>
           <Image
             src={ThreeDot}
             onClick={(e: React.MouseEvent<HTMLImageElement>) => {
-              setChecked(index !== checked ? index : -1);
+              setChecked(id !== checked ? id : -1);
             }}
             alt="프로젝트 수정 및 삭제"
           />
-          {checked === index ? (
-            <SmallList checked={checked} idx={index}>
+          {checked === id ? (
+            <SmallList checked={checked} idx={id}>
               <ListLink to="">
                 <List>수정</List>
               </ListLink>
@@ -46,17 +42,17 @@ const ProjectCard = ({
           ) : null}
         </ImgWrapper>
         <TitleWrapper>
-          <h3>{title}</h3>
-          <ListContents>{text}</ListContents>
+          <h3>{name}</h3>
+          <ListContents>{content}</ListContents>
         </TitleWrapper>
         <ListBottom>
           <RegisterDate>등록날짜 | {date}</RegisterDate>
           <Money>
-            {goalMoney}원 / {nowMoney}원
+            {target_funding_amount}원 / {funding_amount}원
           </Money>
         </ListBottom>
       </ListItems>
-    </>
+    </Link>
   );
 };
 

@@ -16,7 +16,7 @@ const App = () => {
             <Route path="/" element={<Main />} />
             <Route path="/createProject" element={<CreateProject />} />
             <Route path="/mypage" element={<MyPage />} />
-            <Route path="/seeProject" element={<SeeProject />} />
+            <Route path="/project/:id" element={<SeeProject />} />
             <Route path="/hall" element={<Hall />} />
           </Routes>
         </BrowserRouter>

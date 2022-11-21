@@ -14,6 +14,7 @@ export { default as ThreeDot } from "./three_dot.svg";
 export { default as RoundProfileImg } from "./roundProfileImg.png";
 export { default as CommentImg } from "./commentImg.svg";
 export { default as Like } from "./like.svg";
+export { default as noLike } from "./noLike.svg";
 export { default as Share } from "./share.svg";
 export { default as HallBackground } from "./hall_background.png";
 export { default as ProfileImg } from "./profile_image.png";

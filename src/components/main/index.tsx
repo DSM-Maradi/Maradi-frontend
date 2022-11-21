@@ -1,17 +1,24 @@
 import Header from "../common/header";
 import styled from "styled-components";
 import { MainImg, SearchFont, ListImg, SortArrow } from "../../assets/img";
-import { ProjectList } from "../../constance/projectlist";
 import { Link } from "react-router-dom";
 import auth from "../../apis/auth/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { searchProject, projectType } from "../../apis/project/Search";
+
+interface searchProjectStateType {
+  order: string;
+  name: string;
+}
 
 const Main = () => {
+  const [projectList, setProjectList] = useState<projectType[] | null>(null);
+  const [searchProjectState, setSearchProjectState] =
+    useState<searchProjectStateType>({ order: "RECOMMEND", name: "" });
   const urlParam = new URL(window.location.href).searchParams.get("code");
   useEffect(() => {
     if (urlParam) {
       auth(urlParam).then((res) => {
-        console.log(res);
         localStorage.setItem("access_token", res.access_token);
         localStorage.setItem("refresh_token", res.refresh_token);
         localStorage.setItem("code", urlParam);
@@ -19,6 +26,13 @@ const Main = () => {
       });
     }
   }, [urlParam]);
+
+  useEffect(() => {
+    searchProject(searchProjectState)
+      .then((res) => setProjectList(res.projects))
+      .catch((err) => console.log(err));
+  }, [searchProjectState]);
+
   return (
     <>
       <Header />
@@ -32,16 +46,28 @@ const Main = () => {
       </MainImgContainer>
       <SearchBarArea>
         <SearchWrapper>
-          <SelectStyle>
-            <option value="">정렬순서</option>
-            <option value="">추천순</option>
-            <option value="">인기순</option>
+          <SelectStyle
+            onChange={({ target }) =>
+              setSearchProjectState({
+                ...searchProjectState,
+                order: target.value,
+              })
+            }
+          >
+            <option value="RECOMMEND">추천순</option>
+            <option value="POPULARITY">인기순</option>
           </SelectStyle>
           <InputWrapper>
             <SearchBarInput
               type="text"
               autoComplete="off"
               placeholder="찾으시는 프로젝트가 있나요?"
+              onChange={({ target }) =>
+                setSearchProjectState({
+                  ...searchProjectState,
+                  name: target.value,
+                })
+              }
             />
             <SearchFontTag src={SearchFont} />
           </InputWrapper>
@@ -49,27 +75,28 @@ const Main = () => {
       </SearchBarArea>
       <ListWrapper>
         <ListContainer>
-          {ProjectList.map((e) => (
-            <ListBlock
-              key={e.id}
-              onClick={() => window.scrollTo(0, 0)}
-              to="/seeProject"
-            >
-              <ListItems>
-                <ListImgTag src={ListImg} alt="리스트 이미지" />
-                <TitleWrapper>
-                  <h3>{e.title}</h3>
-                  <ListContents>{e.text}</ListContents>
-                </TitleWrapper>
-                <ListBottom>
-                  <RegisterDate>등록날짜 | {e.date}</RegisterDate>
-                  <Money>
-                    {e.goalMoney}원 / {e.nowMoney}원
-                  </Money>
-                </ListBottom>
-              </ListItems>
-            </ListBlock>
-          ))}
+          {projectList &&
+            projectList.map((e) => (
+              <ListBlock
+                key={e.id}
+                onClick={() => window.scrollTo(0, 0)}
+                to={`/project/${e.id}`}
+              >
+                <ListItems>
+                  <ListImgTag src={ListImg} alt="리스트 이미지" />
+                  <TitleWrapper>
+                    <h3>{e.name}</h3>
+                    <ListContents>{e.content}</ListContents>
+                  </TitleWrapper>
+                  <ListBottom>
+                    <RegisterDate>등록날짜 | {e.date}</RegisterDate>
+                    <Money>
+                      {e.target_funding_amount}원 / {e.funding_amount}원
+                    </Money>
+                  </ListBottom>
+                </ListItems>
+              </ListBlock>
+            ))}
         </ListContainer>
       </ListWrapper>
     </>

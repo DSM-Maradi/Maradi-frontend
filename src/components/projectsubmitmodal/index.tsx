@@ -1,9 +1,13 @@
 import { useState, useRef, useMemo } from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { createProject } from "../../apis/project/Create";
 import { ImgUpload, XButton } from "../../assets/img";
+import { InputType } from "../createproject";
 
 interface PropsType {
   setModal: (modal: boolean) => void;
+  input: InputType;
 }
 
 interface UploadProps {
@@ -12,7 +16,7 @@ interface UploadProps {
   type: string;
 }
 
-const ProjectSubmitModal = ({ setModal }: PropsType) => {
+const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
   const [image, setImage] = useState<UploadProps | null>();
   const [simpleIntroduce, setSimpleIntroduce] = useState<string>("");
   const RefValue = useRef<HTMLInputElement>(null);
@@ -42,6 +46,8 @@ const ProjectSubmitModal = ({ setModal }: PropsType) => {
     }
     return <Image src={image?.thumbnail} alt={image?.type} />;
   }, [image]);
+
+  const navigate = useNavigate();
   return (
     <ModalContainer onClick={onClick}>
       <ModalWrapper
@@ -72,8 +78,15 @@ const ProjectSubmitModal = ({ setModal }: PropsType) => {
           />
         </ImgBlock>
         <PostFormWrapper>
-          <PostForm onClick={() => setModal(false)}>
-            <PostFormSpan>제출하기</PostFormSpan>
+          <PostForm>
+            <PostFormSpan
+              onClick={() => {
+                navigate("/");
+                createProject(input);
+              }}
+            >
+              제출하기
+            </PostFormSpan>
           </PostForm>
         </PostFormWrapper>
       </ModalWrapper>
