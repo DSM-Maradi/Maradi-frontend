@@ -20,7 +20,7 @@ const ProjectCard = ({
   checked,
 }: PropsType) => {
   return (
-    <Link to={`/project/${id}`}>
+    <Wrapper to={`/project/${id}`}>
       <ListItems key={id} checked={checked} index={id}>
         <ImgWrapper>
           <Image
@@ -52,12 +52,17 @@ const ProjectCard = ({
           </Money>
         </ListBottom>
       </ListItems>
-    </Link>
+    </Wrapper>
   );
 };
 
+const Wrapper = styled(Link)`
+  text-decoration: none;
+`;
+
 const TitleWrapper = styled.div`
   padding: 0 20px;
+  color: ${({ theme }) => theme.color.black};
 `;
 
 const ListItems = styled.li<{ checked: number; index: number }>`
@@ -104,12 +109,12 @@ const ListItems = styled.li<{ checked: number; index: number }>`
 
 const ListContents = styled.div`
   color: ${({ theme }) => theme.color.gray900};
-  margin-top: 10px;
+  margin: 10px 0 0 0;
 `;
 const ListBottom = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: 10px;
 `;
 
@@ -121,6 +126,7 @@ const RegisterDate = styled.span`
   color: ${({ theme }) => theme.color.gray700};
   display: flex;
   flex-direction: column-reverse;
+  margin-left: 30px;
 `;
 
 const Money = styled.span`
@@ -129,6 +135,7 @@ const Money = styled.span`
   font-size: 24px;
   line-height: 24px;
   font-family: ${({ theme }) => theme.font.arita};
+  margin-right: 30px;
 `;
 
 const List = styled.div`

@@ -254,7 +254,7 @@ const ListWrapper = styled.div`
 const ListBottom = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: 10px;
 `;
 
@@ -266,6 +266,7 @@ const RegisterDate = styled.span`
   color: ${({ theme }) => theme.color.gray700};
   display: flex;
   flex-direction: column-reverse;
+  margin-left: 30px;
 `;
 
 const Money = styled.span`
@@ -274,6 +275,7 @@ const Money = styled.span`
   font-size: 24px;
   line-height: 24px;
   font-family: ${({ theme }) => theme.font.arita};
+  margin-right: 30px;
 `;
 
 const TitleWrapper = styled.div`

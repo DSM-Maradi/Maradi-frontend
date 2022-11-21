@@ -1,7 +1,7 @@
 import { useState, useRef, useMemo } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { createProject } from "../../apis/project/Create";
+import { createProject } from "../../apis/project/create";
 import { ImgUpload, XButton } from "../../assets/img";
 import { InputType } from "../createproject";
 
