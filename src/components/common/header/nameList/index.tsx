@@ -20,9 +20,9 @@ const NameList = ({ setLogin }: PropsType) => {
           <span>마이페이지</span>
         </Items>
       </Wrapper>
-      <Wrapper to="">
-        <Items onClick={LogoutOnClick}>
-          <span></span>
+      <Wrapper to="/chat">
+        <Items>
+          <span>채팅하기</span>
         </Items>
       </Wrapper>
       <Wrapper to="">

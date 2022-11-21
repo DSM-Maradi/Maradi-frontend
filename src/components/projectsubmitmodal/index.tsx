@@ -1,8 +1,9 @@
 import { useState, useRef, useMemo } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { createProject } from "../../apis/project/create";
+import { createProject } from "../../apis/project/Create";
 import { ImgUpload, XButton } from "../../assets/img";
+import { customToast } from "../../utils/Toast";
 import { InputType } from "../createproject";
 
 interface PropsType {
@@ -36,7 +37,6 @@ const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
   };
   const showImage = useMemo(() => {
     if (!image && image === undefined) {
-      console.log("chekc");
       return (
         <>
           <UploadImg src={ImgUpload} alt="이미지 업로드 사진" />
@@ -82,7 +82,12 @@ const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
             <PostFormSpan
               onClick={() => {
                 navigate("/");
-                createProject(input);
+                createProject({
+                  title: input.title,
+                  content: input.content,
+                  image_description: simpleIntroduce,
+                });
+                customToast("성공적으로 작성했습니다", "success");
               }}
             >
               제출하기

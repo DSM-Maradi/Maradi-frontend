@@ -6,11 +6,16 @@ import MyPage from "./components/mypage";
 import SeeProject from "./components/seeproject";
 import Hall from "./components/hall";
 import { RecoilRoot } from "recoil";
+import { Chat } from "./components/chat";
+import { Chating } from "./components/chat/chating";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
     <RecoilRoot>
       <StyleProvider>
+        <ToastContainer />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Main />} />
@@ -18,6 +23,10 @@ const App = () => {
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/project/:id" element={<SeeProject />} />
             <Route path="/hall" element={<Hall />} />
+            <Route path="/chat">
+              <Route index element={<Chat />} />
+              <Route path=":id" element={<Chating />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </StyleProvider>

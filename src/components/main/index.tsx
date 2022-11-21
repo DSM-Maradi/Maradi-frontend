@@ -1,10 +1,10 @@
 import Header from "../common/header";
 import styled from "styled-components";
-import { MainImg, SearchFont, ListImg, SortArrow } from "../../assets/img";
-import { Link } from "react-router-dom";
+import { MainImg, SearchFont, SortArrow } from "../../assets/img";
 import auth from "../../apis/auth/auth";
 import { useEffect, useState } from "react";
 import { searchProject, projectType } from "../../apis/project/Search";
+import { ProjectItem } from "../ProjectItem";
 
 interface searchProjectStateType {
   order: string;
@@ -74,37 +74,34 @@ const Main = () => {
         </SearchWrapper>
       </SearchBarArea>
       <ListWrapper>
-        <ListContainer>
-          {projectList &&
-            projectList.map((e) => (
-              <ListBlock
-                key={e.id}
-                onClick={() => window.scrollTo(0, 0)}
-                to={`/project/${e.id}`}
-              >
-                <ListItems>
-                  <ListImgTag src={ListImg} alt="리스트 이미지" />
-                  <TitleWrapper>
-                    <h3>{e.name}</h3>
-                    <ListContents>{e.content}</ListContents>
-                  </TitleWrapper>
-                  <ListBottom>
-                    <RegisterDate>등록날짜 | {e.date}</RegisterDate>
-                    <Money>
-                      {e.target_funding_amount}원 / {e.funding_amount}원
-                    </Money>
-                  </ListBottom>
-                </ListItems>
-              </ListBlock>
-            ))}
-        </ListContainer>
+        {projectList &&
+          projectList.map((e) => (
+            <ProjectItem
+              key={e.id}
+              id={e.id}
+              name={e.name}
+              content={e.content}
+              date={e.date}
+              target_funding_amount={e.target_funding_amount}
+              funding_amount={e.funding_amount}
+            />
+          ))}
       </ListWrapper>
     </>
   );
 };
 
-const ListBlock = styled(Link)`
-  text-decoration: none;
+const SearchWrapper = styled.div`
+  display: flex;
+`;
+
+const InputWrapper = styled.div`
+  width: 700px;
+  display: flex;
+  border: 2px solid ${({ theme }) => theme.color.gray900};
+  border-radius: 4px;
+  align-items: center;
+  justify-content: space-around;
 `;
 
 const MainImgContainer = styled.div`
@@ -181,106 +178,13 @@ const SearchFontTag = styled.img`
   cursor: pointer;
 `;
 
-const ListContainer = styled.ul`
-  width: 80%;
-  display: flex;
-  list-style: none;
-  flex-flow: wrap;
-  justify-content: center;
-`;
-
-const ListItems = styled.li`
-  width: 500px;
-  height: 400px;
-  margin: 0 40px 5% 0;
-  border-radius: 12px;
-  box-shadow: 3px 3px 5px 3px #b6b6b6;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  @keyframes slideUp {
-    0% {
-      transform: translateY(0%);
-    }
-    100% {
-      transform: translateY(-5%);
-    }
-  }
-  @keyframes slideDown {
-    0% {
-      transform: translateY(-5%);
-    }
-    100% {
-      transform: translateY(0%);
-    }
-  }
-  animation: slideDown 0.4s;
-  :hover {
-    animation: slideUp 0.4s;
-    animation-fill-mode: forwards;
-  }
-`;
-
-const ListImgTag = styled.img`
-  width: 500px;
-  border-radius: 12px 12px 0 0;
-`;
-
-const ListContents = styled.div`
-  color: ${({ theme }) => theme.color.gray900};
-  margin-top: 10px;
-`;
-
-const SearchWrapper = styled.div`
-  display: flex;
-`;
-
-const InputWrapper = styled.div`
-  width: 700px;
-  display: flex;
-  border: 2px solid ${({ theme }) => theme.color.gray900};
-  border-radius: 4px;
-  align-items: center;
-  justify-content: space-around;
-`;
-
 const ListWrapper = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-`;
-
-const ListBottom = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-`;
-
-const RegisterDate = styled.span`
-  font-size: 14px;
-  font-weight: 400;
-  font-family: ${({ theme }) => theme.font.arita};
-  line-height: 14px;
-  color: ${({ theme }) => theme.color.gray700};
-  display: flex;
-  flex-direction: column-reverse;
-  margin-left: 30px;
-`;
-
-const Money = styled.span`
-  color: ${({ theme }) => theme.color.darkmain};
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 24px;
-  font-family: ${({ theme }) => theme.font.arita};
-  margin-right: 30px;
-`;
-
-const TitleWrapper = styled.div`
-  padding: 0 20px 0 20px;
-  color: ${({ theme }) => theme.color.black};
+  gap: 100px 80px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  margin-bottom: 150px;
 `;
 
 export default Main;

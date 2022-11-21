@@ -11,7 +11,7 @@ import {
 } from "../../assets/img";
 import { useParams } from "react-router-dom";
 import { detailResponseType, projectDetail } from "../../apis/project/Detail";
-import { createProject } from "../../apis/comment/Create";
+import { createComment } from "../../apis/comment/Create";
 import { patchLike } from "../../apis/Like";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
@@ -49,7 +49,7 @@ function SeeProject() {
   const [detail, setDetail] = useState<detailResponseType | null>(null);
   useEffect(() => {
     if (id) projectDetail(id).then((res) => setDetail(res));
-  }, [id, detail]);
+  }, [id, detail, createComment]);
 
   return (
     <>
@@ -104,7 +104,7 @@ function SeeProject() {
               onChange={({ target }) => setCommentState(target.value)}
               placeholder="프로젝트에 대한 여러 평가들을 작성해주세요."
             />
-            <CommentSubmitBtn onClick={() => createProject(commentState, id)}>
+            <CommentSubmitBtn onClick={() => createComment(commentState, id)}>
               <img src={CommentImg} alt="댓글 이미지" />
               댓글작성
             </CommentSubmitBtn>
