@@ -6,13 +6,9 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(
-  async function (config) {
-    const accessToken = await localStorage.getItem("access_token");
-    accessToken
-      ? (config.headers = {
-          Authorization: `Bearer ${accessToken}`,
-        })
-      : null;
+  function (config) {
+    const accessToken = localStorage.getItem("access_token");
+    accessToken ? (config.headers = { Authorization: `Bearer ${accessToken}`}): null;
     return config;
   },
   function (error: AxiosError) {
