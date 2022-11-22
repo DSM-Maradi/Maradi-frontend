@@ -3,30 +3,35 @@ import styled from "styled-components";
 import ProjectCard from "./projectcard";
 import { useEffect, useState } from "react";
 import { myProject, myProjectResType } from "../../apis/project/My";
+import { mypage, MyPageType } from "../../apis/profile";
 
 const MyPage = () => {
   const [checked, setChecked] = useState<number>(-1);
   const [projectList, setProjectList] = useState<null | myProjectResType>(null);
+  const [mypageUser, setMyPageUser] = useState<MyPageType>();
   useEffect(() => {
     myProject()
       .then((res) => {
         setProjectList(res);
       })
       .catch((err) => console.log(err));
+    mypage()
+      .then((res) => setMyPageUser(res.data))
+      .catch((err) => console.error(err));
   }, []);
   return (
     <Wrapper>
       <Header />
       <MyInformationWrapper>
-        <WelcomeText>디자인해라님 환영합니다 !</WelcomeText>
+        <WelcomeText>{mypageUser?.name}님 환영합니다 !</WelcomeText>
         <FundingWrapper>
           <Amount>
             <Title>총 펀딩받은 남은금액</Title>
-            <Money>100000만원</Money>
+            <Money>{mypageUser?.to_funding}원</Money>
           </Amount>
           <Amount>
             <Title>총 펀딩받은 남은금액</Title>
-            <Money>100000만원</Money>
+            <Money>{mypageUser?.receive_funding}원</Money>
           </Amount>
         </FundingWrapper>
       </MyInformationWrapper>
@@ -40,8 +45,9 @@ const MyPage = () => {
         <Text>나의 프로젝트</Text>
         <ListWrapper>
           {projectList &&
-            projectList.my_project.map((project) => (
+            projectList.my_project.map((project, key) => (
               <ProjectCard
+                key={key}
                 id={project.id}
                 name={project.name}
                 content={project.content}
@@ -58,8 +64,9 @@ const MyPage = () => {
         <Text>좋아요 누른 프로젝트</Text>
         <ListWrapper>
           {projectList &&
-            projectList.liked_project.map((project) => (
+            projectList.liked_project.map((project, key) => (
               <ProjectCard
+                key={key}
                 id={project.id}
                 name={project.name}
                 content={project.content}

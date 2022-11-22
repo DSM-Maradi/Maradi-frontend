@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import LoginModal from "../../loginModal";
 import NameList from "./nameList";
+import { myprofile, myProfileType } from "../../../apis/header";
 
 const Header = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [login, setLogin] = useState<boolean>(false);
+  const [user, setUser] = useState<myProfileType>();
   useEffect(() => {
     if (modal) {
       document.body.style.overflow = "hidden";
@@ -21,6 +23,11 @@ const Header = () => {
       setLogin(true);
     }
   }, [modal]);
+  useEffect(() => {
+    myprofile()
+      .then((res) => setUser(res.data))
+      .catch((err) => console.error(err));
+  }, []);
   return (
     <>
       <HeaderContainer>
@@ -39,8 +46,8 @@ const Header = () => {
             <>
               <details>
                 <ProfileWrapper>
-                  <Profile src={ProfileImg} alt="프로필 이미지" />
-                  <NameText>zㅣ존민성</NameText>
+                  <Profile src={user?.profile_image} alt="프로필 이미지" />
+                  <NameText>{user?.name}</NameText>
                 </ProfileWrapper>
                 <NameList setLogin={setLogin} />
               </details>
@@ -62,6 +69,7 @@ const Profile = styled.img`
   width: 40px;
   height: 40px;
   margin-right: 15px;
+  border-radius: 100px;
   cursor: pointer;
 `;
 

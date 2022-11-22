@@ -1,14 +1,14 @@
 import axios, { AxiosError } from "axios";
 
 const instance = axios.create({
-  baseURL: `http://13.124.172.5:8080`,
+  baseURL: `http://3.35.27.187:8080`,
   timeout: 10000,
 });
 
 instance.interceptors.request.use(
   function (config) {
     const accessToken = localStorage.getItem("access_token");
-    accessToken ||
+    accessToken &&
       (config.headers = { Authorization: `Bearer ${accessToken}` });
     return config;
   },

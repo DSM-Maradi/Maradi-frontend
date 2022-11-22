@@ -16,11 +16,11 @@ import { patchLike } from "../../apis/Like";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 function SeeProject() {
-  const [change, setChange] = useState({
+  const [change, setChange] = useState<{ click: boolean; money: number }>({
     click: false,
     money: 0,
   });
-  const [commentState, setCommentState] = useState("");
+  const [commentState, setCommentState] = useState<string>("");
   const { click, money } = change;
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const money = Number(e.target.value);
@@ -104,7 +104,11 @@ function SeeProject() {
               onChange={({ target }) => setCommentState(target.value)}
               placeholder="프로젝트에 대한 여러 평가들을 작성해주세요."
             />
-            <CommentSubmitBtn onClick={() => createComment(commentState, id)}>
+            <CommentSubmitBtn
+              onClick={({target}) => {
+                createComment(commentState, id);
+              }}
+            >
               <img src={CommentImg} alt="댓글 이미지" />
               댓글작성
             </CommentSubmitBtn>
