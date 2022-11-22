@@ -8,15 +8,13 @@ export const ProjectItem = ({
   name,
   content,
   date,
+  image_url,
   target_funding_amount,
   funding_amount,
 }: projectType) => {
   return (
-    <_Wrapper
-      to={`/project/${id}`}
-      onClick={() => window.scrollTo(0, 0)}
-    >
-      <_Preview url={ListImg} />
+    <_Wrapper to={`/project/${id}`} onClick={() => window.scrollTo(0, 0)}>
+      <_Preview url={image_url ? image_url : ListImg} />
       <_Post>
         <div>
           <_Title>{name}</_Title>
