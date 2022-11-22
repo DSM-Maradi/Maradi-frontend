@@ -1,25 +1,21 @@
 import styled from "styled-components";
 import Header from "../common/header";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import {
-  RoundProfileImg,
-  CommentImg,
-  Like,
-  Share,
-  ThreeDot,
-  noLike,
-} from "../../assets/img";
+import { CommentImg, Like, Share, ThreeDot, noLike } from "../../assets/img";
 import { useParams } from "react-router-dom";
 import { detailResponseType, projectDetail } from "../../apis/project/Detail";
 import { createComment } from "../../apis/comment/Create";
 import { patchLike } from "../../apis/Like";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { deletecomment } from "../../apis/comment/delete";
 
 function SeeProject() {
   const [change, setChange] = useState<{ click: boolean; money: number }>({
     click: false,
     money: 0,
   });
+  const [deleteIndex, setDeleteIndex] = useState<number>(0);
+  const [image, setImage] = useState<string>("");
   const [commentState, setCommentState] = useState<string>("");
   const { click, money } = change;
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,8 +44,13 @@ function SeeProject() {
 
   const [detail, setDetail] = useState<detailResponseType | null>(null);
   useEffect(() => {
-    if (id) projectDetail(id).then((res) => setDetail(res));
-  }, [id, detail, createComment]);
+    if (id)
+      projectDetail(id).then((res) => {
+        setDetail(res);
+        setImage(res.profile_image);
+      });
+    if (deleteIndex !== 0) deletecomment(deleteIndex);
+  }, [id, detail, createComment, image, deleteIndex]);
 
   return (
     <>
@@ -80,7 +81,7 @@ function SeeProject() {
             </SideBar>
             <ProjectContents>{detail.content}</ProjectContents>
             <FundingProfileContainer>
-              <img src={RoundProfileImg} alt="프로필" />
+              <ProfileImage src={image} alt="프로필" />
               <NameAndBtn>
                 <UserName>{detail.name}</UserName>
                 {click === false ? (
@@ -102,11 +103,13 @@ function SeeProject() {
           <PostCommentContainer>
             <PostCommentInput
               onChange={({ target }) => setCommentState(target.value)}
+              value={commentState}
               placeholder="프로젝트에 대한 여러 평가들을 작성해주세요."
             />
             <CommentSubmitBtn
-              onClick={({target}) => {
+              onClick={() => {
                 createComment(commentState, id);
+                setCommentState("");
               }}
             >
               <img src={CommentImg} alt="댓글 이미지" />
@@ -121,7 +124,9 @@ function SeeProject() {
                     <SummaryWrapper>
                       <ThreeDotImage src={ThreeDot} />
                     </SummaryWrapper>
-                    <DeleteButton>댓글 삭제하기</DeleteButton>
+                    <DeleteButton onClick={() => setDeleteIndex(i)}>
+                      댓글 삭제하기
+                    </DeleteButton>
                   </details>
                 </ImgWrapper>
                 <CommentItem>
@@ -136,6 +141,12 @@ function SeeProject() {
     </>
   );
 }
+
+const ProfileImage = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+`;
 
 const DeleteButton = styled.button`
   position: absolute;

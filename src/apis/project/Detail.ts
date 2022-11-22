@@ -11,6 +11,7 @@ export interface detailResponseType {
   like_count: number;
   is_liked: true;
   name: string;
+  profile_image: string;
   comment: commentType[];
 }
 
