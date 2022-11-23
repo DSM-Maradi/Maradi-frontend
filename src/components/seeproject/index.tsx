@@ -3,7 +3,11 @@ import Header from "../common/header";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { CommentImg, Like, Share, ThreeDot, noLike } from "../../assets/img";
 import { useParams } from "react-router-dom";
-import { detailResponseType, projectDetail } from "../../apis/project/Detail";
+import {
+  commentType,
+  detailResponseType,
+  projectDetail,
+} from "../../apis/project/Detail";
 import { createComment } from "../../apis/comment/Create";
 import { patchLike } from "../../apis/Like";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -42,7 +46,6 @@ function SeeProject() {
   };
 
   const [detail, setDetail] = useState<detailResponseType | null>(null);
-
   const getProjectDatail = () => {
     projectDetail(id).then((res) => {
       setDetail(res);
@@ -136,14 +139,25 @@ function SeeProject() {
                     <SummaryWrapper>
                       <ThreeDotImage src={ThreeDot} />
                     </SummaryWrapper>
-                    <DeleteButton onClick={() => deletecomment(i)}>
+                    <DeleteButton
+                      onClick={() =>
+                        deletecomment(v.id).then(() => console.log("댓글 삭제"))
+                      }
+                    >
                       댓글 삭제하기
                     </DeleteButton>
                   </details>
                 </ImgWrapper>
                 <CommentItem>
                   <CommentUserName>{v.name}</CommentUserName>
-                  <CommentContents>{v.content}</CommentContents>
+                  <CommentContents>
+                    {v.content.split("\n").map((s, index) => (
+                      <span key={index}>
+                        {s}
+                        <br />
+                      </span>
+                    ))}
+                  </CommentContents>
                 </CommentItem>
               </CommentWrapper>
             ))}
@@ -356,7 +370,6 @@ const CommentItemContainer = styled.div`
 
 const CommentItem = styled.div`
   width: 100%;
-  height: 70px;
   justify-content: center;
   display: flex;
   gap: 30px;
@@ -374,6 +387,10 @@ const CommentContents = styled.div`
   font-size: 16px;
   width: 513px;
   float: right;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const SideBar = styled.div`

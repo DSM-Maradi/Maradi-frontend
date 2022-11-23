@@ -1,6 +1,7 @@
 import instance from "../axios";
 
-interface commentType {
+export interface commentType {
+  id: number;
   name: string;
   content: string;
 }
