@@ -8,6 +8,7 @@ import { createComment } from "../../apis/comment/Create";
 import { patchLike } from "../../apis/Like";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { deletecomment } from "../../apis/comment/delete";
+import { fundingProject } from "../../apis/funding";
 
 function SeeProject() {
   const [change, setChange] = useState<{ click: boolean; money: number }>({
@@ -25,22 +26,22 @@ function SeeProject() {
       money: money,
     });
   };
-
+  const { id } = useParams();
   const onFunding = () => {
     setChange({
       click: !click,
       money: money,
     });
-    if (click === true && money !== 0) {
+
+    if (click && money !== 0) {
       alert(`${money}원을 후원을 진행하시겠습니까?`);
       setChange({
         click: !click,
         money: 0,
       });
+      fundingProject(Number(id), money);
     }
   };
-
-  const { id } = useParams();
 
   const [detail, setDetail] = useState<detailResponseType | null>(null);
   useEffect(() => {
