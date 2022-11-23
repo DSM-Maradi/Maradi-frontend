@@ -6,6 +6,7 @@ export interface projectType {
   content: string;
   date: string;
   target_funding_amount: number;
+  image_url: string;
   funding_amount: number;
 }
 

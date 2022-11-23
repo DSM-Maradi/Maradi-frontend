@@ -1,6 +1,7 @@
 import { useState, useRef, useMemo } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { uploadImage } from "../../apis/image";
 import { createProject } from "../../apis/project/Create";
 import { ImgUpload, XButton } from "../../assets/img";
 import { customToast } from "../../utils/Toast";
@@ -20,14 +21,21 @@ interface UploadProps {
 const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
   const [image, setImage] = useState<UploadProps | null>();
   const [simpleIntroduce, setSimpleIntroduce] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [fundingValue, setFundingValue] = useState<number>();
   const RefValue = useRef<HTMLInputElement>(null);
   const onClick = () => {
     setModal(false);
   };
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
+    const formData = new FormData();
     if (fileList && fileList[0]) {
-      const url = URL.createObjectURL(fileList[0]);
+      formData.append("file", fileList[0]);
+      uploadImage(formData)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+      const url: string = URL.createObjectURL(fileList[0]);
       setImage({
         file: fileList[0],
         thumbnail: url,
@@ -59,12 +67,11 @@ const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
         <ImgBlock>
           <ImgUploadContainer htmlFor="input-file">
             {showImage}
-
             <FileSelector
               ref={RefValue}
               type="file"
               id="input-file"
-              accept="image/jpg, image/png, image/jpeg"
+              accept="image/*"
               onChange={onChange}
               onClick={() => RefValue.current?.click()}
             />
@@ -77,27 +84,76 @@ const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
             placeholder="간단한 설명을 작성해주세요."
           />
         </ImgBlock>
-        <PostFormWrapper>
-          <PostForm>
-            <PostFormSpan
-              onClick={() => {
-                navigate("/");
-                createProject({
-                  title: input.title,
-                  content: input.content,
-                  image_description: simpleIntroduce,
-                });
-                customToast("성공적으로 작성했습니다", "success");
+        <FundingWrapper>
+          <TargetMoneyTitle>목표 금액</TargetMoneyTitle>
+          <FundingInputBlock>
+            <FundingInput
+              value={fundingValue}
+              type="number"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setFundingValue(Number(e.target.value));
               }}
-            >
-              제출하기
-            </PostFormSpan>
+              placeholder="목표 금액을 입력하세요."
+            />
+          </FundingInputBlock>
+        </FundingWrapper>
+        <PostFormWrapper>
+          <PostForm
+            onClick={() => {
+              createProject({
+                title: input.title,
+                content: input.content,
+                image_description: simpleIntroduce,
+                image_url: imageUrl,
+              })
+                .then(() => {
+                  navigate("/");
+                  customToast("성공적으로 작성했습니다", "success");
+                })
+                .catch((err) => console.error(err));
+            }}
+          >
+            <PostFormSpan>제출하기</PostFormSpan>
           </PostForm>
         </PostFormWrapper>
       </ModalWrapper>
     </ModalContainer>
   );
 };
+
+const FundingInputBlock = styled.div`
+  width: 300px;
+  height: 40px;
+  background: ${({ theme }) => theme.color.gray100};
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+`;
+
+const FundingInput = styled.input`
+  width: 298px;
+  height: 50%;
+  padding: 0 10px;
+  background: none;
+  font-family: ${({ theme }) => theme.font.noto};
+  ::placeholder {
+    color: ${({ theme }) => theme.color.gray900};
+  }
+`;
+
+const FundingWrapper = styled.div`
+  width: 90%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+const TargetMoneyTitle = styled.span`
+  width: 165px;
+  color: ${({ theme }) => theme.color.black};
+  font-size: 16px;
+  font-weight: bold;
+`;
 
 const Image = styled.img`
   width: 165px;
@@ -148,10 +204,12 @@ const FileSelector = styled.input`
 const ImgBlock = styled.div`
   width: 90%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
+  color: ${({ theme }) => theme.color.black};
 `;
 const UploadTextarea = styled.textarea`
-  width: 297px;
+  width: 300px;
   height: 120px;
   font-size: 12px;
   border-radius: 8px;
@@ -185,10 +243,6 @@ const ModalWrapper = styled.form`
   text-align: center;
   background-color: ${({ theme }) => theme.color.white};
   z-index: 3;
-  span {
-    color: ${({ theme }) => theme.color.white};
-    font-size: 15px;
-  }
 `;
 
 const ImgUploadContainer = styled.label`

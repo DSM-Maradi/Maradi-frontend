@@ -23,7 +23,7 @@ export const ProjectItem = ({
         <div>
           <_Date>등록날짜 | {date}</_Date>
           <_Funding>
-            {target_funding_amount}원 / {funding_amount}원
+            {funding_amount}원 / {target_funding_amount}원
           </_Funding>
         </div>
       </_Post>

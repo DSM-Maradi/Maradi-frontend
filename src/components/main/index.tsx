@@ -82,6 +82,7 @@ const Main = () => {
               name={e.name}
               content={e.content}
               date={e.date}
+              image_url={e.image_url}
               target_funding_amount={e.target_funding_amount}
               funding_amount={e.funding_amount}
             />

@@ -63,6 +63,7 @@ const Header = () => {
 const ProfileWrapper = styled.summary`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const Profile = styled.img`

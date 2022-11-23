@@ -27,11 +27,11 @@ const MyPage = () => {
         <FundingWrapper>
           <Amount>
             <Title>총 펀딩받은 남은금액</Title>
-            <Money>{mypageUser?.to_funding}원</Money>
+            <Money>{mypageUser ? mypageUser.receive_funding : 0}원</Money>
           </Amount>
           <Amount>
-            <Title>총 펀딩받은 남은금액</Title>
-            <Money>{mypageUser?.receive_funding}원</Money>
+            <Title>총 펀딩한 금액</Title>
+            <Money>{mypageUser ? mypageUser.to_funding : 0}원</Money>
           </Amount>
         </FundingWrapper>
       </MyInformationWrapper>
@@ -56,6 +56,7 @@ const MyPage = () => {
                 funding_amount={project.funding_amount}
                 setChecked={setChecked}
                 checked={checked}
+                image_url={project.image_url}
               />
             ))}
         </ListWrapper>
@@ -75,6 +76,7 @@ const MyPage = () => {
                 funding_amount={project.funding_amount}
                 setChecked={setChecked}
                 checked={checked}
+                image_url={project.image_url}
               />
             ))}
         </ListWrapper>
@@ -184,6 +186,7 @@ const Wrapper = styled.div`
 const ProjectWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
   margin-top: 50px;
 `;

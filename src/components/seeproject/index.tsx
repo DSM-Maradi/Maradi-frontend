@@ -7,7 +7,7 @@ import { detailResponseType, projectDetail } from "../../apis/project/Detail";
 import { createComment } from "../../apis/comment/Create";
 import { patchLike } from "../../apis/Like";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { deletecomment } from "../../apis/comment/delete";
+// import { deletecomment } from "../../apis/comment/delete";
 import { fundingProject } from "../../apis/funding";
 
 function SeeProject() {
@@ -50,7 +50,7 @@ function SeeProject() {
         setDetail(res);
         setImage(res.profile_image);
       });
-    if (deleteIndex !== 0) deletecomment(deleteIndex);
+    // if (deleteIndex !== 0) deletecomment(deleteIndex);
   }, [id, detail, createComment, image, deleteIndex]);
 
   return (

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { ThreeDot, ListImg } from "../../../assets/img";
-import { Link } from "react-router-dom";
 import { projectType } from "../../../apis/project/My";
 import { Dispatch, SetStateAction } from "react";
+import { customToast } from "../../../utils/Toast";
 
 interface PropsType extends projectType {
   checked: number;
@@ -18,47 +18,49 @@ const ProjectCard = ({
   funding_amount,
   setChecked,
   checked,
+  image_url,
 }: PropsType) => {
   return (
-    <Wrapper to={`/project/${id}`}>
-      <ListItems key={id} checked={checked} index={id}>
-        <ImgWrapper>
-          <Image
-            src={ThreeDot}
-            onClick={(e: React.MouseEvent<HTMLImageElement>) => {
-              setChecked(id !== checked ? id : -1);
-            }}
-            alt="프로젝트 수정 및 삭제"
-          />
-          {checked === id ? (
-            <SmallList checked={checked} idx={id}>
-              <ListLink to="">
-                <List>수정</List>
-              </ListLink>
-              <ListLink to="">
-                <List>삭제</List>
-              </ListLink>
-            </SmallList>
-          ) : null}
-        </ImgWrapper>
-        <TitleWrapper>
-          <h3>{name}</h3>
-          <ListContents>{content}</ListContents>
-        </TitleWrapper>
-        <ListBottom>
-          <RegisterDate>등록날짜 | {date}</RegisterDate>
-          <Money>
-            {target_funding_amount}원 / {funding_amount}원
-          </Money>
-        </ListBottom>
-      </ListItems>
-    </Wrapper>
+    <ListItems
+      onClick={() => (window.location.href = `/project/${id}`)}
+      key={id}
+      checked={checked}
+      index={id}
+    >
+      <ImgWrapper image={image_url}>
+        <Image
+          src={ThreeDot}
+          onClick={(e: React.MouseEvent<HTMLImageElement>) => {
+            e.stopPropagation();
+            setChecked(id !== checked ? id : -1);
+          }}
+          alt="프로젝트 수정"
+        />
+        {checked === id ? (
+          <SmallList
+            onClick={(e) => e.stopPropagation()}
+            checked={checked}
+            idx={id}
+          >
+            <ListLink>
+              <List>수정</List>
+            </ListLink>
+          </SmallList>
+        ) : null}
+      </ImgWrapper>
+      <TitleWrapper>
+        <h3>{name}</h3>
+        <ListContents>{content}</ListContents>
+      </TitleWrapper>
+      <ListBottom>
+        <RegisterDate>등록날짜 | {date}</RegisterDate>
+        <Money>
+          {target_funding_amount}원 / {funding_amount}원
+        </Money>
+      </ListBottom>
+    </ListItems>
   );
 };
-
-const Wrapper = styled(Link)`
-  text-decoration: none;
-`;
 
 const TitleWrapper = styled.div`
   padding: 0 20px;
@@ -145,19 +147,18 @@ const List = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid ${({ theme }) => theme.color.gray700};
   :hover {
     background: ${({ theme }) => theme.color.gray700};
+    border-radius: 10px;
   }
 `;
 
-const ListLink = styled(Link)`
+const ListLink = styled.div`
   text-decoration: none;
 `;
 
 const SmallList = styled.div<{ checked: number; idx: number }>`
   width: 144px;
-  height: 90px;
   position: absolute;
   transform: translate(100px, 50px);
   border-radius: 10px;
@@ -175,10 +176,10 @@ const Image = styled.img`
   cursor: pointer;
 `;
 
-const ImgWrapper = styled.div`
+const ImgWrapper = styled.div<{ image: string }>`
   width: 100%;
   height: 150px;
-  background-image: url(${ListImg});
+  background-image: url(${({ image }) => (image ? image : ListImg)});
   display: flex;
   justify-content: flex-end;
   overflow: hidden;

@@ -10,6 +10,7 @@ export interface projectType {
   name: string;
   content: string;
   date: string;
+  image_url: string;
   target_funding_amount: number;
   funding_amount: number;
 }
