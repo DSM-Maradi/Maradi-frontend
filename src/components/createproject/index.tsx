@@ -56,9 +56,6 @@ const CreateProject = () => {
               <BackBtnSpan>뒤로가기</BackBtnSpan>
             </BackButton>
             <ButtonWrapper>
-              <Button>
-                <ButtonSpan>임시저장</ButtonSpan>
-              </Button>
               <Button onClick={() => setModal(true)}>
                 <ButtonSpan>업로드 하기</ButtonSpan>
               </Button>
