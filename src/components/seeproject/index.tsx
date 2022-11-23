@@ -7,7 +7,7 @@ import { detailResponseType, projectDetail } from "../../apis/project/Detail";
 import { createComment } from "../../apis/comment/Create";
 import { patchLike } from "../../apis/Like";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-// import { deletecomment } from "../../apis/comment/delete";
+import { deletecomment } from "../../apis/comment/delete";
 import { fundingProject } from "../../apis/funding";
 
 function SeeProject() {
@@ -15,8 +15,6 @@ function SeeProject() {
     click: false,
     money: 0,
   });
-  const [deleteIndex, setDeleteIndex] = useState<number>(0);
-  const [image, setImage] = useState<string>("");
   const [commentState, setCommentState] = useState<string>("");
   const { click, money } = change;
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +24,7 @@ function SeeProject() {
       money: money,
     });
   };
-  const { id } = useParams();
+  const id = useParams().id as string;
   const onFunding = () => {
     setChange({
       click: !click,
@@ -44,14 +42,16 @@ function SeeProject() {
   };
 
   const [detail, setDetail] = useState<detailResponseType | null>(null);
+
+  const getProjectDatail = () => {
+    projectDetail(id).then((res) => {
+      setDetail(res);
+    });
+  };
+
   useEffect(() => {
-    if (id)
-      projectDetail(id).then((res) => {
-        setDetail(res);
-        setImage(res.profile_image);
-      });
-    // if (deleteIndex !== 0) deletecomment(deleteIndex);
-  }, [id, detail, createComment, image, deleteIndex]);
+    getProjectDatail();
+  }, []);
 
   return (
     <>
@@ -64,7 +64,10 @@ function SeeProject() {
             <SideBar>
               <LikeImg>
                 <img
-                  onClick={() => patchLike(id)}
+                  onClick={async () => {
+                    await patchLike(id);
+                    getProjectDatail();
+                  }}
                   src={detail.is_liked ? noLike : Like}
                   alt="좋아요"
                 />
@@ -82,7 +85,7 @@ function SeeProject() {
             </SideBar>
             <ProjectContents>{detail.content}</ProjectContents>
             <FundingProfileContainer>
-              <ProfileImage src={image} alt="프로필" />
+              <ProfileImage src={detail.profile_image} alt="프로필" />
               <NameAndBtn>
                 <UserName>{detail.name}</UserName>
                 {click === false ? (
@@ -108,9 +111,10 @@ function SeeProject() {
               placeholder="프로젝트에 대한 여러 평가들을 작성해주세요."
             />
             <CommentSubmitBtn
-              onClick={() => {
-                createComment(commentState, id);
+              onClick={async () => {
+                await createComment(commentState, id);
                 setCommentState("");
+                getProjectDatail();
               }}
             >
               <img src={CommentImg} alt="댓글 이미지" />
@@ -125,7 +129,7 @@ function SeeProject() {
                     <SummaryWrapper>
                       <ThreeDotImage src={ThreeDot} />
                     </SummaryWrapper>
-                    <DeleteButton onClick={() => setDeleteIndex(i)}>
+                    <DeleteButton onClick={() => deletecomment(i)}>
                       댓글 삭제하기
                     </DeleteButton>
                   </details>

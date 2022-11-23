@@ -30,8 +30,11 @@ const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
   const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
     const formdata = new FormData();
-    
     if (fileList && fileList[0]) {
+      formdata.append("file", fileList[0]);
+      uploadImage(formdata)
+        .then((res) => setImageUrl(res.data.file_url))
+        .catch((err) => console.error(err));
       const url: string = URL.createObjectURL(fileList[0]);
       setImage({
         file: fileList[0],
@@ -95,7 +98,7 @@ const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
               }}
               placeholder="목표 금액을 입력하세요."
             />
-            <span>원</span>
+            <Text>원</Text>
           </FundingInputBlock>
         </FundingWrapper>
         <PostFormWrapper>
@@ -105,8 +108,9 @@ const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
                 title: input.title,
                 content: input.content,
                 image_description: simpleIntroduce,
-                image_url: "",
-                target_funding_amount: fundingValue !== undefined ? fundingValue : 0,
+                image_url: imageUrl,
+                target_funding_amount:
+                  fundingValue !== undefined ? fundingValue : 0,
               })
                 .then(() => {
                   navigate("/");
@@ -122,6 +126,10 @@ const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
     </ModalContainer>
   );
 };
+
+const Text = styled.span`
+  margin-right: 10px;
+`;
 
 const FundingInputBlock = styled.div`
   width: 300px;

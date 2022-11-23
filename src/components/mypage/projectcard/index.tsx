@@ -55,7 +55,7 @@ const ProjectCard = ({
       <ListBottom>
         <RegisterDate>등록날짜 | {date}</RegisterDate>
         <Money>
-          {target_funding_amount}원 / {funding_amount}원
+          {funding_amount}원 / {target_funding_amount}원
         </Money>
       </ListBottom>
     </ListItems>

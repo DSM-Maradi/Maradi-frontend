@@ -11,6 +11,6 @@ interface HallOfFameResponseType {
 }
 
 export const HallOfFame = async () => {
-  const { data } = await instance.get<HallOfFameResponseType>("/hall-of-fame");
+  const { data } = await instance.get<HallOfFameResponseType>("/project/hall-of-fame");
   return data;
 };
