@@ -29,12 +29,9 @@ const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
   };
   const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
-    const formData = new FormData();
+    const formdata = new FormData();
+    
     if (fileList && fileList[0]) {
-      formData.append("file", fileList[0]);
-      uploadImage(formData)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
       const url: string = URL.createObjectURL(fileList[0]);
       setImage({
         file: fileList[0],
@@ -89,12 +86,16 @@ const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
           <FundingInputBlock>
             <FundingInput
               value={fundingValue}
-              type="number"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setFundingValue(Number(e.target.value));
+              onChange={(e) => {
+                if (Number(e.target.value) === NaN) {
+                  setFundingValue(0);
+                } else if (Number(e.target.value) >= 0) {
+                  setFundingValue(Number(e.target.value));
+                } else console.log("숫자가 아닌 숫자 블락");
               }}
               placeholder="목표 금액을 입력하세요."
             />
+            <span>원</span>
           </FundingInputBlock>
         </FundingWrapper>
         <PostFormWrapper>
@@ -104,7 +105,8 @@ const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
                 title: input.title,
                 content: input.content,
                 image_description: simpleIntroduce,
-                image_url: imageUrl,
+                image_url: "",
+                target_funding_amount: fundingValue !== undefined ? fundingValue : 0,
               })
                 .then(() => {
                   navigate("/");

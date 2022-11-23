@@ -5,6 +5,7 @@ interface createProjectRequestType {
   content: string;
   image_url: string;
   image_description: string;
+  target_funding_amount: number;
 }
 
 export const createProject = async ({
@@ -12,12 +13,14 @@ export const createProject = async ({
   content,
   image_description,
   image_url,
+  target_funding_amount,
 }: createProjectRequestType) => {
   const { data } = await instance.post(`/project`, {
     title,
     content,
     image_description,
     image_url,
+    target_funding_amount,
   });
   return data;
 };
