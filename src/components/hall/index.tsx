@@ -23,7 +23,7 @@ const Hall = () => {
         <Title>명예의 전당</Title>
         <RankWrapper>
           {hallOfList.map((hall) => (
-            <PlayerName font={6}>{hall.name}</PlayerName>
+            <PlayerName font={6}>{hall.rank}등 {hall.name}</PlayerName>
           ))}
         </RankWrapper>
       </HallWrapper>

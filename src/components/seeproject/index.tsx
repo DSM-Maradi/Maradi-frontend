@@ -83,7 +83,14 @@ function SeeProject() {
                 <ShareImg src={Share} alt="공유 이미지" />
               </CopyToClipboard>
             </SideBar>
-            <ProjectContents>{detail.content}</ProjectContents>
+            <ProjectContents>
+              {detail.content.split("\n").map((line: string, index: number) => (
+                <span key={index}>
+                  {line}
+                  <br />
+                </span>
+              ))}
+            </ProjectContents>
             <FundingProfileContainer>
               <ProfileImage src={detail.profile_image} alt="프로필" />
               <NameAndBtn>
