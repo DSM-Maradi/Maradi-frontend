@@ -10,6 +10,7 @@ import { Chat } from "./components/chat";
 import { Chating } from "./components/chat/chating";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Introduce from "./components/introduce";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
               <Route index element={<Chat />} />
               <Route path=":id" element={<Chating />} />
             </Route>
+            <Route path="introduce" element={<Introduce />} />
           </Routes>
         </BrowserRouter>
       </StyleProvider>
