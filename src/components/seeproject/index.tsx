@@ -3,7 +3,11 @@ import Header from "../common/header";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { CommentImg, Like, Share, ThreeDot, noLike } from "../../assets/img";
 import { useParams } from "react-router-dom";
-import { commentType, detailResponseType, projectDetail } from "../../apis/project/Detail";
+import {
+  commentType,
+  detailResponseType,
+  projectDetail,
+} from "../../apis/project/Detail";
 import { createComment } from "../../apis/comment/Create";
 import { patchLike } from "../../apis/Like";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -16,7 +20,7 @@ function SeeProject() {
     money: 0,
   });
   const [commentState, setCommentState] = useState<string>("");
-  const [commentValue, setCommentValue] = useState<commentType>()
+  const [commentValue, setCommentValue] = useState<commentType>();
   const { click, money } = change;
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const money = Number(e.target.value);
