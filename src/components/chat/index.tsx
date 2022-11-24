@@ -21,8 +21,8 @@ export const Chat = () => {
       <Header />
       <_MarginTop />
       <_RoomList>
-        {roomList.map((room, i) => (
-          <_Link to={`/chat/${i}`}>
+        {roomList.map((room: string, i: number) => (
+          <_Link key={i} to={`/chat/${i}`}>
             <_Wrapper>
               <div>{room}</div>
               <svg
