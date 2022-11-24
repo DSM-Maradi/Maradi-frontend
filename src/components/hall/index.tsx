@@ -22,8 +22,11 @@ const Hall = () => {
       <HallWrapper>
         <Title>명예의 전당</Title>
         <RankWrapper>
-          {hallOfList.map((hall: UsersType ,index: number) => (
-            <PlayerName key={index} font={6}>{hall.rank}등 {hall.name} {hall.amount}원</PlayerName>
+          {hallOfList.map((hall: UsersType, index: number) => (
+            <PlayerName key={index} font={24}>
+              {hall.rank}등 {hall.name}{" "}
+              {hall.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
+            </PlayerName>
           ))}
         </RankWrapper>
       </HallWrapper>
@@ -32,8 +35,8 @@ const Hall = () => {
 };
 
 const PlayerName = styled.span<StyledProps>`
-  width: 1000px;
-  font-size: ${({ font }) => `${font * 10}px`};
+  width: 600px;
+  font-size: ${({ font }) => `${font}px`};
   color: ${({ theme }) => theme.color.white};
   font-family: ${({ theme }) => theme.font.inter};
   font-weight: 700;
