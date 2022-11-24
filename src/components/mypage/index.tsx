@@ -44,7 +44,7 @@ const MyPage = () => {
       <ProjectWrapper>
         <Text>나의 프로젝트</Text>
         <ListWrapper>
-          {projectList &&
+          {projectList ? (
             projectList.my_project.map((project, key) => (
               <ProjectCard
                 key={key}
@@ -58,13 +58,16 @@ const MyPage = () => {
                 checked={checked}
                 image_url={project.image_url}
               />
-            ))}
+            ))
+          ) : (
+            <div>올린 프로젝트가 없습니다..</div>
+          )}
         </ListWrapper>
       </ProjectWrapper>
       <ProjectWrapper>
         <Text>좋아요 누른 프로젝트</Text>
         <ListWrapper>
-          {projectList &&
+          {projectList ? (
             projectList.liked_project.map((project, key) => (
               <ProjectCard
                 key={key}
@@ -78,7 +81,10 @@ const MyPage = () => {
                 checked={checked}
                 image_url={project.image_url}
               />
-            ))}
+            ))
+          ) : (
+            <div>좋아요 누른 프로젝트가 없습니다...</div>
+          )}
         </ListWrapper>
       </ProjectWrapper>
     </Wrapper>

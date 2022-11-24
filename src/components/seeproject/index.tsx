@@ -222,7 +222,7 @@ const CommentWrapper = styled.div`
   flex-direction: column;
 `;
 
-const Wrapper = styled.body`
+const Wrapper = styled.section`
   width: 100vw;
   height: 100%;
   display: flex;
@@ -328,7 +328,7 @@ const FundingInput = styled.input`
   padding-left: 23px;
 `;
 
-const PostCommentContainer = styled.form`
+const PostCommentContainer = styled.div`
   margin-top: 175px;
   width: 616px;
   flex-direction: column;
