@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { HeadLogo, ProfileImg } from "../../../assets/img";
+import { HeadLogo } from "../../../assets/img";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import LoginModal from "../../loginModal";
@@ -24,10 +24,12 @@ const Header = () => {
     }
   }, [modal]);
   useEffect(() => {
-    myprofile()
-      .then((res) => setUser(res.data))
-      .catch((err) => console.error(err));
-  }, []);
+    if (login) {
+      myprofile()
+        .then((res) => setUser(res.data))
+        .catch((err) => console.error(err));
+    }
+  }, [login]);
   return (
     <>
       <HeaderContainer>
