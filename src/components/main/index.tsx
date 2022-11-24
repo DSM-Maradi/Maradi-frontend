@@ -5,6 +5,7 @@ import auth from "../../apis/auth/auth";
 import { useEffect, useState } from "react";
 import { searchProject, projectType } from "../../apis/project/Search";
 import { ProjectItem } from "../projectItem";
+import { customToast } from "../../utils/Toast";
 
 interface searchProjectStateType {
   order: string;
@@ -18,12 +19,17 @@ const Main = () => {
   const urlParam = new URL(window.location.href).searchParams.get("code");
   useEffect(() => {
     if (urlParam) {
-      auth(urlParam).then((res) => {
-        localStorage.setItem("access_token", res.access_token);
-        localStorage.setItem("refresh_token", res.refresh_token);
-        localStorage.setItem("code", urlParam);
-        window.location.replace("/");
-      });
+      auth(urlParam)
+        .then((res) => {
+          localStorage.setItem("access_token", res.access_token);
+          localStorage.setItem("refresh_token", res.refresh_token);
+          localStorage.setItem("code", urlParam);
+          window.location.replace("/");
+        })
+        .catch((err) => {
+          console.error(err);
+          customToast("로그인에 실패하였습니다.", "error");
+        });
     }
   }, [urlParam]);
 
@@ -85,6 +91,7 @@ const Main = () => {
               image_url={e.image_url}
               target_funding_amount={e.target_funding_amount}
               funding_amount={e.funding_amount}
+              like_count={e.like_count}
             />
           ))}
       </ListWrapper>
