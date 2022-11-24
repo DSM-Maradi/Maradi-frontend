@@ -107,6 +107,9 @@ function SeeProject() {
                       onChange={onChange}
                       type="number"
                       placeholder="얼마를 펀딩하시겠어요?"
+                      onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                        e.key === "Enter" ? onFunding() : null
+                      }
                     />
                     <FundingBtn2 onClick={onFunding}>펀딩하기</FundingBtn2>
                   </FundingInputContainer>
