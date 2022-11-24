@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { ThreeDot, ListImg } from "../../../assets/img";
 import { projectType } from "../../../apis/project/My";
 import { Dispatch, SetStateAction } from "react";
-import { customToast } from "../../../utils/Toast";
 
 interface PropsType extends projectType {
   checked: number;
@@ -20,6 +19,7 @@ const ProjectCard = ({
   checked,
   image_url,
 }: PropsType) => {
+  const gotoModifyProject = () => {};
   return (
     <ListItems
       onClick={() => (window.location.href = `/project/${id}`)}
@@ -43,7 +43,7 @@ const ProjectCard = ({
             idx={id}
           >
             <ListLink>
-              <List>수정</List>
+              <List onClick={gotoModifyProject}>수정</List>
             </ListLink>
           </SmallList>
         ) : null}
@@ -147,9 +147,10 @@ const List = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid ${({ theme }) => theme.color.gray700};
+  border-radius: 10px;
   :hover {
     background: ${({ theme }) => theme.color.gray700};
-    border-radius: 10px;
   }
 `;
 
@@ -180,6 +181,9 @@ const ImgWrapper = styled.div<{ image: string }>`
   width: 100%;
   height: 150px;
   background-image: url(${({ image }) => (image ? image : ListImg)});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
   display: flex;
   justify-content: flex-end;
   overflow: hidden;

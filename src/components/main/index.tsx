@@ -4,7 +4,7 @@ import { MainImg, SearchFont, SortArrow } from "../../assets/img";
 import auth from "../../apis/auth/auth";
 import { useEffect, useState } from "react";
 import { searchProject, projectType } from "../../apis/project/Search";
-import { ProjectItem } from "../ProjectItem";
+import { ProjectItem } from "../projectItem";
 
 interface searchProjectStateType {
   order: string;
