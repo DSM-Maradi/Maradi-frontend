@@ -1,7 +1,7 @@
-import { ListImg } from "../assets/img";
+import { ListImg } from "../../assets/img";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { projectType } from "../apis/project/Search";
+import { projectType } from "../../apis/project/Search";
 
 export const ProjectItem = ({
   id,
