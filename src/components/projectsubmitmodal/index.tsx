@@ -12,14 +12,7 @@ interface PropsType {
   input: InputType;
 }
 
-interface UploadProps {
-  file: File;
-  thumbnail: string;
-  type: string;
-}
-
 const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
-  const [image, setImage] = useState<UploadProps | null>();
   const [simpleIntroduce, setSimpleIntroduce] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
   const [fundingValue, setFundingValue] = useState<number>();
@@ -35,16 +28,10 @@ const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
       uploadImage(formdata)
         .then((res) => setImageUrl(res.data.file_url))
         .catch((err) => console.error(err));
-      const url: string = URL.createObjectURL(fileList[0]);
-      setImage({
-        file: fileList[0],
-        thumbnail: url,
-        type: fileList[0].type.slice(0, 5),
-      });
     }
   };
   const showImage = useMemo(() => {
-    if (!image && image === undefined) {
+    if (!imageUrl) {
       return (
         <>
           <UploadImg src={ImgUpload} alt="이미지 업로드 사진" />
@@ -52,9 +39,8 @@ const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
         </>
       );
     }
-    return <Image src={image?.thumbnail} alt={image?.type} />;
-  }, [image]);
-
+    return <Image src={imageUrl} alt={typeof imageUrl} />;
+  }, [imageUrl]);
   const navigate = useNavigate();
   return (
     <ModalContainer onClick={onClick}>
