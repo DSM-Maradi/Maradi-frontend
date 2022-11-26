@@ -35,8 +35,8 @@ function SeeProject() {
       click: !click,
       money: money,
     });
-
-    if (click && money !== 0) {
+    
+    if (click && money > 0) {
       alert(`${money}원을 후원을 진행하시겠습니까?`);
       setChange({
         click: !click,

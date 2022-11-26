@@ -13,6 +13,7 @@ export interface projectType {
   image_url: string;
   target_funding_amount: number;
   funding_amount: number;
+  like_count: number;
 }
 
 interface searchProjectResponseType {

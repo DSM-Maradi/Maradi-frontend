@@ -7,14 +7,23 @@ import { ImgUpload, XButton } from "../../assets/img";
 import { customToast } from "../../utils/Toast";
 import { InputType } from "../createproject";
 
+
 interface PropsType {
   setModal: (modal: boolean) => void;
   input: InputType;
+  image_url: string;
+  image_description: string;
 }
 
-const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
-  const [simpleIntroduce, setSimpleIntroduce] = useState<string>("");
-  const [imageUrl, setImageUrl] = useState<string>("");
+const ProjectSubmitModal = ({
+  setModal,
+  input,
+  image_url,
+  image_description,
+}: PropsType) => {
+  
+  const [simpleIntroduce, setSimpleIntroduce] = useState<string>(image_description);
+  const [imageUrl, setImageUrl] = useState<string>(image_url);
   const [fundingValue, setFundingValue] = useState<number>();
   const RefValue = useRef<HTMLInputElement>(null);
   const onClick = () => {
@@ -91,8 +100,8 @@ const ProjectSubmitModal = ({ setModal, input }: PropsType) => {
           <PostForm
             onClick={() => {
               createProject({
-                title: input.title,
-                content: input.content,
+                title: input.titles,
+                content: input.contents,
                 image_description: simpleIntroduce,
                 image_url: imageUrl,
                 target_funding_amount:

@@ -1,10 +1,11 @@
 import { atom } from "recoil";
 
-export const user = atom({
-  key: "user",
+export const information = atom({
+  key: "information",
   default: {
-    name: "",
-    profile: "",
-    email: "",
+    title: "",
+    content: "",
+    image_url: "",
+    image_description: "",
   },
 });

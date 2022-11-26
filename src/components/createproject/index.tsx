@@ -3,20 +3,24 @@ import { Arrow } from "../../assets/img";
 import { useState, useEffect, ChangeEvent } from "react";
 import ProjectSubmitModal from "../projectsubmitmodal";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { information } from "../../modules/recoil/atom";
 
 export interface InputType {
-  title: string;
-  content: string;
+  titles: string;
+  contents: string;
 }
 
 const CreateProject = () => {
   const nav = useNavigate();
+  const useInformation = useRecoilValue(information);
+  console.log(useInformation);
   const [input, setInputs] = useState<InputType>({
-    title: "",
-    content: "",
+    titles: useInformation.title,
+    contents: useInformation.content,
   });
   const [modal, setModal] = useState<boolean>(false);
-  const { title, content }: InputType = input;
+  const { titles, contents }: InputType = input;
   const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value, name } = e.target;
     setInputs({
@@ -34,20 +38,27 @@ const CreateProject = () => {
   return (
     <>
       <MainContainer>
-        {modal && <ProjectSubmitModal input={input} setModal={setModal} />}
+        {modal && (
+          <ProjectSubmitModal
+            image_url={useInformation.image_url}
+            image_description={useInformation.image_description}
+            input={input}
+            setModal={setModal}
+          />
+        )}
         <WriteContainer>
           <div>
             <WriteTitle
               placeholder="제목을 입력해주세요"
               onChange={onChange}
-              name="title"
-              value={title}
+              name="titles"
+              value={titles}
             />
             <WriteContents
               onChange={onChange}
               placeholder="내용을 입력해주세요"
-              name="content"
-              value={content}
+              name="contents"
+              value={contents}
             />
           </div>
           <InterfaceBar>
@@ -64,9 +75,9 @@ const CreateProject = () => {
         </WriteContainer>
         <PostWriteContainer>
           <PostWrite>
-            <PostWriteTitle>{title}</PostWriteTitle>
+            <PostWriteTitle>{titles}</PostWriteTitle>
             <PostWriteContent>
-              {content.split("\n").map((line: string, index: number) => (
+              {contents.split("\n").map((line: string, index: number) => (
                 <span key={index}>
                   {line}
                   <br />

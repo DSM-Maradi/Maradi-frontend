@@ -9,21 +9,21 @@ import { myprofile, myProfileType } from "../../../apis/header";
 const Header = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [login, setLogin] = useState<boolean>(false);
-  const [user, setUser] = useState<myProfileType>();
+  const [user, setUser] = useState<myProfileType | null>(null);
   useEffect(() => {
     if (modal) {
       document.body.style.overflow = "hidden";
     } else {
       setTimeout(() => (document.body.style.overflow = "unset"), 1000);
     }
+  }, [modal]);
+  useEffect(() => {
     if (
       localStorage.getItem("access_token") &&
       localStorage.getItem("refresh_token")
     ) {
       setLogin(true);
     }
-  }, [modal]);
-  useEffect(() => {
     if (login) {
       myprofile()
         .then((res) => setUser(res.data))

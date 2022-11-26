@@ -1,13 +1,13 @@
 import instance from "../axios";
 
 export interface projectType {
-  id: number;
+  id?: number;
   name: string;
   content: string;
-  date: string;
-  target_funding_amount: number;
+  date?: string;
+  target_funding_amount?: number;
   image_url: string;
-  funding_amount: number;
+  funding_amount?: number;
 }
 
 export interface myProjectResType {

@@ -11,6 +11,7 @@ export const ProjectItem = ({
   image_url,
   target_funding_amount,
   funding_amount,
+  like_count,
 }: projectType) => {
   return (
     <_Wrapper to={`/project/${id}`} onClick={() => window.scrollTo(0, 0)}>
@@ -21,6 +22,7 @@ export const ProjectItem = ({
           <_Content>{content}</_Content>
         </div>
         <div>
+          <_Like_Number>추천 수 | {like_count}</_Like_Number>
           <_Date>등록날짜 | {date}</_Date>
           <_Funding>
             {funding_amount}원 / {target_funding_amount}원
@@ -30,6 +32,11 @@ export const ProjectItem = ({
     </_Wrapper>
   );
 };
+
+const _Like_Number = styled.span`
+  color: ${({ theme }) => theme.color.gray900};
+  font-size: 14px;
+`;
 
 const _Post = styled.div`
   padding: 0px 30px;

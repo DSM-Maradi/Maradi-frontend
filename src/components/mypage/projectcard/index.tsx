@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import { ThreeDot, ListImg } from "../../../assets/img";
 import { projectType } from "../../../apis/project/My";
-import { Dispatch, SetStateAction } from "react";
+import { updateProject } from "../../../apis/project/update";
+import { useSetRecoilState } from "recoil";
+import { information } from "../../../modules/recoil/atom";
 
 interface PropsType extends projectType {
   checked: number;
-  setChecked: Dispatch<SetStateAction<number>>;
+  setChecked: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const ProjectCard = ({
@@ -19,26 +21,43 @@ const ProjectCard = ({
   checked,
   image_url,
 }: PropsType) => {
-  const gotoModifyProject = () => {};
+  const setProjectInformation = useSetRecoilState(information);
+  const gotoModifyProject = () => {
+    if (id)
+      updateProject(id, "스몽키", content, image_url)
+        .then(() => {
+          setProjectInformation({
+            title: name,
+            content: content,
+            image_url: image_url,
+            image_description: "",
+          });
+
+          // window.location.href = "/createProject";
+        })
+        .catch((err) => console.error(err));
+  };
   return (
     <ListItems
       onClick={() => (window.location.href = `/project/${id}`)}
       key={id}
       checked={checked}
-      index={id}
+      index={id ? id : -1}
     >
       <ImgWrapper image={image_url}>
         <Image
           src={ThreeDot}
           onClick={(e: React.MouseEvent<HTMLImageElement>) => {
             e.stopPropagation();
-            setChecked(id !== checked ? id : -1);
+            setChecked(id ? (id !== checked ? id : -1) : -1);
           }}
           alt="프로젝트 수정"
         />
         {checked === id ? (
           <SmallList
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e: React.MouseEvent<HTMLDivElement>) =>
+              e.stopPropagation()
+            }
             checked={checked}
             idx={id}
           >

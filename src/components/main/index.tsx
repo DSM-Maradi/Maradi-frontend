@@ -21,10 +21,11 @@ const Main = () => {
     if (urlParam) {
       auth(urlParam)
         .then((res) => {
+          customToast("로그인에 성공하였습니다.", "success");
           localStorage.setItem("access_token", res.access_token);
           localStorage.setItem("refresh_token", res.refresh_token);
           localStorage.setItem("code", urlParam);
-          window.location.replace("/");
+          setTimeout(() => window.location.replace("/"), 2000);
         })
         .catch((err) => {
           console.error(err);
