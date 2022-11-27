@@ -24,16 +24,9 @@ const ProjectCard = ({
   const setProjectInformation = useSetRecoilState(information);
   const gotoModifyProject = () => {
     if (id)
-      updateProject(id, "스몽키", content, image_url)
+      updateProject(id, name, content, image_url)
         .then(() => {
-          setProjectInformation({
-            title: name,
-            content: content,
-            image_url: image_url,
-            image_description: "",
-          });
-
-          // window.location.href = "/createProject";
+          console.log("success");
         })
         .catch((err) => console.error(err));
   };

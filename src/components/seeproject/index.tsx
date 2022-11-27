@@ -13,6 +13,7 @@ import { patchLike } from "../../apis/Like";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { deletecomment } from "../../apis/comment/delete";
 import { fundingProject } from "../../apis/funding";
+import { customToast } from "../../utils/Toast";
 
 function SeeProject() {
   const [change, setChange] = useState<{ click: boolean; money: number }>({
@@ -20,7 +21,6 @@ function SeeProject() {
     money: 0,
   });
   const [commentState, setCommentState] = useState<string>("");
-  const [commentValue, setCommentValue] = useState<commentType>();
   const { click, money } = change;
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const money = Number(e.target.value);
@@ -29,20 +29,33 @@ function SeeProject() {
       money: money,
     });
   };
-  const id = useParams().id as string;
+  const id: string = useParams().id as string;
   const onFunding = () => {
     setChange({
       click: !click,
       money: money,
     });
-    
-    if (click && money > 0) {
-      alert(`${money}원을 후원을 진행하시겠습니까?`);
-      setChange({
-        click: !click,
-        money: 0,
-      });
-      fundingProject(Number(id), money);
+
+    if (click && money >= 0) {
+      const check = window.confirm(
+        `${money
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원을 후원을 진행하시겠습니까?`
+      );
+      if (check) {
+        setChange({
+          click: !click,
+          money: 0,
+        });
+        fundingProject(Number(id), money)
+          .then(() => customToast("펀딩을 성공하였습니다.", "success"))
+          .catch((err) => {
+            console.error(err);
+            customToast("개발자 오류", "error");
+          });
+      } else {
+        customToast("펀딩을 취소하였습니다.", "error");
+      }
     }
   };
 
@@ -80,9 +93,7 @@ function SeeProject() {
               <SideBarHr />
               <CopyToClipboard
                 text={`http://localhost:3000/project/${id}`}
-                onCopy={() => {
-                  alert("복사완료");
-                }}
+                onCopy={() => customToast("복사완료", "success")}
               >
                 <ShareImg src={Share} alt="공유 이미지" />
               </CopyToClipboard>
@@ -145,7 +156,14 @@ function SeeProject() {
                     </SummaryWrapper>
                     <DeleteButton
                       onClick={() =>
-                        deletecomment(v.id).then(() => alert("댓글 삭제"))
+                        deletecomment(v.id)
+                          .then(() =>
+                            customToast("댓글이 삭제되었습니다.", "success")
+                          )
+                          .catch((err) => {
+                            console.error(err);
+                            customToast("개발자 오류", "error");
+                          })
                       }
                     >
                       댓글 삭제하기
